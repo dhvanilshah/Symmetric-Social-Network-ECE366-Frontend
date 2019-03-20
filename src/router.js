@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { connect } from "react-redux";
 import Signin from "./pages/signin/signin";
+import Home from "./pages/home/home";
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -42,7 +43,7 @@ const PublicRoutes = ({ isLoggedIn }) => {
         /> */}
         <RestrictedRoute
           path="/home"
-          component={Signin}
+          component={Home}
           isLoggedIn={isLoggedIn}
         />
       </Switch>
