@@ -27,5 +27,9 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "main": "index.js",
+  "repository": "https://github.com/dhvanilshah/Symmetric-Social-Network-ECE366-Frontend.git",
+  "author": "Ariana Freitag <freitagariana@gmail.com>",
+  "license": "MIT"
 }
