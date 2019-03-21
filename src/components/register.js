@@ -1,4 +1,9 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AppBar from 'material-ui/AppBar';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+
 
 class Register extends Component {
   constructor (props) {
@@ -56,4 +61,5 @@ class Register extends Component {
 const style = {
   margin: 15,
 };
+
 export default Register;
