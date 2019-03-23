@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react'
 import {
   Route,
   Redirect,
   Switch,
   BrowserRouter as Router
-} from "react-router-dom";
-import { connect } from "react-redux";
-import Signin from "./pages/signin/signin";
-import Home from "./pages/home/home";
+} from "react-router-dom"
+import Home from "./pages/home/home"
+import { connect } from 'react-redux'
+import Signin from './containers/frontpage.js'
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -18,19 +18,19 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
       ) : (
         <Redirect
           to={{
-            pathname: "/",
+            pathname: '/',
             state: { from: props.location }
           }}
         />
       )
     }
   />
-);
+)
 const PublicRoutes = ({ isLoggedIn }) => {
   return (
     <Router>
       <Switch>
-        <Route exact path={"/"} component={Signin} />
+        <Route exact path={'/'} component={Signin} />
         {/* <Route
           exact
           path={"/signin"}
@@ -48,9 +48,9 @@ const PublicRoutes = ({ isLoggedIn }) => {
         />
       </Switch>
     </Router>
-  );
-};
+  )
+}
 
 export default connect(state => ({
   isLoggedIn: state.Auth.idToken !== null
-}))(PublicRoutes);
+}))(PublicRoutes)

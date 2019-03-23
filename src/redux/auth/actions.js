@@ -12,5 +12,5 @@ const actions = {
   logout: () => ({
     type: actions.LOGOUT
   })
-};
-export default actions;
+}
+export default actions
