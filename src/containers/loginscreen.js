@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import RaisedButton from 'material-ui/RaisedButton'
-import Login from '../components/Login'
-import Register from '../components/Register'
+import Login from '../components/login.js'
+import Register from '../components/register.js'
+import { connect } from 'react-redux'
+import authActions from '../../redux/auth/actions'
 
 const style = {
   margin: 15
@@ -25,28 +27,25 @@ export default class Loginscreen extends Component {
       username: '',
       password: '',
       loginscreen: [],
-      loginmessage: '',
       loginButtons: loginButtons,
       registerButtonLabel: 'Register',
       isLogin: true
     }
   }
+
   componentWillMount () {
     var loginscreen = []
     loginscreen.push(<Login parentContext={this} appContext={this.props.appContext} />)
-    var loginmessage = 'Register Now'
     this.setState({
-      loginscreen: loginscreen,
-      loginmessage: loginmessage
+      loginscreen: loginscreen
     })
   }
+
   handleClick (event, userRole) {
     console.log('event', userRole)
-    var loginmessage
     if (this.state.isLogin) {
       let loginscreen = []
       loginscreen.push(<Register parentContext={this} appContext={this.props.appContext} role={userRole} />)
-      loginmessage = 'Please login'
       let loginButtons = []
       loginButtons.push(
         <div key='login-button'>
@@ -59,7 +58,6 @@ export default class Loginscreen extends Component {
       )
       this.setState({
         loginscreen: loginscreen,
-        loginmessage: loginmessage,
         loginButtons: loginButtons,
         isLogin: false
       })
@@ -76,21 +74,19 @@ export default class Loginscreen extends Component {
         </div>
       )
       loginscreen.push(<Login parentContext={this} appContext={this.props.appContext} role={userRole} />)
-      loginmessage = 'Not Registered yet.'
       this.setState({
         loginscreen: loginscreen,
-        loginmessage: loginmessage,
         loginButtons: loginButtons,
         isLogin: true
       })
     }
   }
+
   render () {
     return (
       <div className='loginscreen' key='loginscreen'>
         {this.state.loginscreen}
         <div>
-          {this.state.loginmessage}
           {this.state.loginButtons}
         </div>
       </div>

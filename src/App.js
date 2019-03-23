@@ -4,7 +4,7 @@ import { store, history } from './redux/store'
 import PublicRoutes from './router'
 // import logo from './logo.svg'
 import './App.css'
-import Loginscreen from './containers/frontpage.js'
+import Loginscreen from './containers/loginscreen.js'
 
 // const App = () => {
 //   // <Provider store={store}>

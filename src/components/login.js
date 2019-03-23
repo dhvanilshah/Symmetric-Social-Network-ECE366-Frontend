@@ -12,9 +12,11 @@ export default class Login extends Component {
       password: ''
     }
   }
+  handleClick (event) {
+    
+  }
   render () {
     return (
-      // <div> Hello </div>
       <div>
         <MuiThemeProvider>
           <div>

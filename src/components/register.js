@@ -50,6 +50,13 @@ export default class Register extends Component {
               onChange={(event, newValue) => this.setState({ password: newValue })}
             />
             <br />
+            <TextField
+              type='service'
+              hintText='Enter the streaming service you use'
+              floatingLabelText='Service'
+              onChange={(event, newValue) => this.setState({ service: newValue })}
+            />
+            <br />
             <RaisedButton label='Submit' primary={true} style={style} onClick={(event) => this.handleClick(event)} />
           </div>
         </MuiThemeProvider>
