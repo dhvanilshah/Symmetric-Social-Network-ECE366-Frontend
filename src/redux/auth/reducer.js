@@ -1,4 +1,10 @@
-import actions from "./actions";
+import {
+  CHECK_AUTHORIZATION,
+  LOGIN_REQUEST,
+  LOGOUT,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR
+} from './actiontypes.js'
 
 const initState = {
   idToken: null,
@@ -6,7 +12,7 @@ const initState = {
   firstName: null,
   lastName: null,
   role: null
-};
+}
 
 export default function authReducer(state = initState, action) {
   switch (action.type) {
@@ -15,7 +21,7 @@ export default function authReducer(state = initState, action) {
     //     ...state,
     //     idToken: action.token
     //   };
-    case actions.LOGIN_SUCCESS:
+    case LOGIN_SUCCESS:
       return {
         ...state,
         idToken: action.idToken
@@ -23,11 +29,11 @@ export default function authReducer(state = initState, action) {
         // firstName: action.firstName,
         // lastName: action.lastName,
         // role: action.role
-      };
-    case actions.LOGOUT:
-      console.log("logout");
-      return initState;
+      }
+    case LOGOUT:
+      console.log('logout')
+      return initState
     default:
-      return state;
+      return state
   }
 }

@@ -4,7 +4,13 @@ import RaisedButton from 'material-ui/RaisedButton'
 import Login from '../components/login.js'
 import Register from '../components/register.js'
 import { connect } from 'react-redux'
-import authActions from '../../redux/auth/actions'
+import {
+  CHECK_AUTHORIZATION,
+  LOGIN_REQUEST,
+  LOGOUT,
+  LOGIN_SUCCESS,
+  LOGIN_ERROR
+} from '../redux/auth/actiontypes.js'
 
 const style = {
   margin: 15
