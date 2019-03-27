@@ -17,10 +17,13 @@ class Register extends Component {
       password: '',
       service: ''
     }
+    // this.registerUser = this.registerUser.bind(this)
   }
+
   registerUser (firstName, lastName, email, username, password, service) {
     this.props.registerUser(this.state.firstName, this.state.lastName, this.state.email, this.state.username, this.state.password, this.state.service)
   }
+
   render () {
     return (
       <div>
@@ -62,7 +65,7 @@ class Register extends Component {
               onChange={(event, newValue) => this.setState({ service: newValue })}
             />
             <br />
-            <RaisedButton label='Submit' primary={true} style={style} onClick={() => this.props.registerUser(this.firstName, this.lastName, this.email, this.username, this.password, this.service)} />
+            <RaisedButton label='Submit' primary={true} style={style} onClick={() => this.registerUser(this.firstName, this.lastName, this.email, this.username, this.password, this.service)} />
           </div>
         </MuiThemeProvider>
       </div>
@@ -73,7 +76,7 @@ class Register extends Component {
 // dispatch actions
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginRequest: (username, password) => dispatch(registerUser(username, password))
+    registerUser: (firstName, lastName, email, username, password, service) => dispatch(registerUser(firstName, lastName, email, username, password, service))
   }
 }
 
