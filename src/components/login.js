@@ -3,18 +3,23 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
+import { loginRequest } from '../redux/auth/actions'
+import { connect } from 'react-redux'
 
-export default class Login extends Component {
+class Login extends Component {
   constructor (props) {
     super(props)
     this.state = {
       username: '',
       password: ''
     }
+    this.loginRequest = this.loginRequest.bind(this)
   }
-  handleClick (event) {
 
+  loginRequest (username, password) {
+    this.props.loginRequest(this.state.username, this.state.password)
   }
+
   render () {
     return (
       <div>
@@ -36,7 +41,7 @@ export default class Login extends Component {
               onChange={(event, newValue) => this.setState({ password: newValue })}
             />
             <br />
-            <RaisedButton label='Submit' primary={true} style={style} onClick={(event) => this.handleClick(event)} />
+            <RaisedButton label='Submit' primary={true} style={style} onClick={() => this.loginRequest(this.username, this.password)} />
           </div>
         </MuiThemeProvider>
       </div>
@@ -44,6 +49,22 @@ export default class Login extends Component {
   }
 }
 
+// dispatch actions
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginRequest: (username, password) => dispatch(loginRequest(username, password))
+  }
+}
+
+// dispatch store variables
+// const mapStateToProps = () => {
+//   return {
+//     <hello />
+//   }
+// }
+
 const style = {
   margin: 15
 }
+
+export default connect(null, mapDispatchToProps)(Login)

@@ -3,21 +3,23 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar'
 import RaisedButton from 'material-ui/RaisedButton'
 import TextField from 'material-ui/TextField'
+import { registerUser } from '../redux/auth/actions'
+import { connect } from 'react-redux'
 
-export default class Register extends Component {
+class Register extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      first_name: '',
-      last_name: '',
+      firstName: '',
+      lastName: '',
       email: '',
       username: '',
       password: '',
       service: ''
     }
   }
-  handleClick (event) {
-
+  registerUser (firstName, lastName, email, username, password, service) {
+    this.props.registerUser(this.state.firstName, this.state.lastName, this.state.email, this.state.username, this.state.password, this.state.service)
   }
   render () {
     return (
@@ -30,13 +32,13 @@ export default class Register extends Component {
             <TextField
               hintText='Enter your First Name'
               floatingLabelText='First Name'
-              onChange={(event, newValue) => this.setState({ first_name: newValue })}
+              onChange={(event, newValue) => this.setState({ firstName: newValue })}
             />
             <br />
             <TextField
               hintText='Enter your Last Name'
               floatingLabelText='Last Name'
-              onChange={(event, newValue) => this.setState({ last_name: newValue })}
+              onChange={(event, newValue) => this.setState({ lastName: newValue })}
             />
             <br />
             <TextField
@@ -60,15 +62,30 @@ export default class Register extends Component {
               onChange={(event, newValue) => this.setState({ service: newValue })}
             />
             <br />
-            <RaisedButton label='Submit' primary={true} style={style} onClick={(event) => this.handleClick(event)} />
+            <RaisedButton label='Submit' primary={true} style={style} onClick={() => this.props.registerUser(this.firstName, this.lastName, this.email, this.username, this.password, this.service)} />
           </div>
         </MuiThemeProvider>
       </div>
     )
   }
 }
+
+// dispatch actions
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginRequest: (username, password) => dispatch(registerUser(username, password))
+  }
+}
+
+// dispatch store variables
+// const mapStateToProps = () => {
+//   return {
+//     <hello />
+//   }
+// }
+
 const style = {
   margin: 15
 }
 
-// export default Register;
+export default connect(null, mapDispatchToProps)(Register)

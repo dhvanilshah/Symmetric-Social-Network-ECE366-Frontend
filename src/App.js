@@ -18,11 +18,10 @@ import Loginscreen from './containers/loginscreen.js'
 export default class App extends Component {
   render () {
     return (
-      // <Provider store={store}>
-      //
-      // </Provider>
+      <Provider store={store}>
+        <Loginscreen />
+      </Provider>
       // <PublicRoutes />
-      <Loginscreen />
     )
   }
 }

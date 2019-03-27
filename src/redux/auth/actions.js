@@ -3,24 +3,41 @@ import {
   LOGIN_REQUEST,
   LOGOUT,
   LOGIN_SUCCESS,
-  LOGIN_ERROR
+  LOGIN_ERROR,
+  REGISTER_USER
 } from './actiontypes.js'
 
-export function checkAuthorization () {
+export function checkAuthorization (token) {
   return {
-    type: CHECK_AUTHORIZATION
+    type: CHECK_AUTHORIZATION,
+    token
   }
 }
 
-export function loginRequest () {
+export function loginRequest (username, password) {
   return {
-    type: LOGIN_REQUEST
+    type: LOGIN_REQUEST,
+    username,
+    password
   }
 }
 
-export function logout () {
+export function logout (receipt) {
   return {
-    type: LOGOUT
+    type: LOGOUT,
+    receipt
+  }
+}
+
+export function registerUser (firstName, lastName, email, username, password, service) {
+  return {
+    type: REGISTER_USER,
+    firstName,
+    lastName,
+    email,
+    username,
+    password,
+    service
   }
 }
 
