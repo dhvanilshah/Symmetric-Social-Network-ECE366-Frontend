@@ -4,7 +4,8 @@ import {
   LOGIN_REQUEST,
   LOGOUT,
   LOGIN_SUCCESS,
-  LOGIN_ERROR
+  LOGIN_ERROR,
+  REGISTER_USER
 } from './actiontypes.js'
 
 export function * loginRequest () {
@@ -18,7 +19,7 @@ export function * loginRequest () {
 
 export function * loginSuccess () {
   yield takeEvery(LOGIN_SUCCESS, function * (payload) {
-    yield localStorage.setItem('token', payload.idToken)
+    yield window.localStorage.setItem('token', payload.idToken)
   })
 }
 
@@ -29,7 +30,16 @@ export function * loginError () {
 export function * logout () {
   yield takeEvery(LOGOUT, function * () {
     console.log('removing-token')
-    localStorage.removeItem('token')
+    window.localStorage.removeItem('token')
+  })
+}
+
+export function * registerUser () {
+  yield takeEvery(REGISTER_USER, function * (payload) {
+    yield put({
+      type: LOGIN_SUCCESS,
+      idToken: payload.token
+    })
   })
 }
 
@@ -59,12 +69,13 @@ export function * logout () {
 // //   });
 // // }
 
-export default function* rootSaga() {
+export default function * rootSaga () {
   yield all([
     // fork(checkAuthorization),
     fork(loginRequest),
     fork(loginSuccess),
     fork(loginError),
-    fork(logout)
-  ]);
+    fork(logout),
+    fork(registerUser)
+  ])
 }

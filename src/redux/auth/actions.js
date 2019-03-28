@@ -4,7 +4,8 @@ import {
   LOGOUT,
   LOGIN_SUCCESS,
   LOGIN_ERROR,
-  REGISTER_USER
+  REGISTER_USER,
+  REGISTER_SUCCESS
 } from './actiontypes.js'
 
 export function checkAuthorization (token) {
@@ -14,7 +15,7 @@ export function checkAuthorization (token) {
   }
 }
 
-export function loginRequest (username, password) {
+export function loginRequest (username, password) { // can also be used for register success
   return {
     type: LOGIN_REQUEST,
     username,
