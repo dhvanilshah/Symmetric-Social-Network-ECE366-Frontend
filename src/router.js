@@ -8,6 +8,10 @@ import {
 import Home from './containers/home'
 import { connect } from 'react-redux'
 import Loginscreen from './containers/loginscreen.js'
+import { connect } from "react-redux";
+import Signin from "./pages/signin/signin";
+import Home from "./pages/home/home";
+import Signup from "./pages/signinup/signup";
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -30,7 +34,9 @@ const PublicRoutes = ({ isLoggedIn }) => {
   return (
     <Router>
       <Switch>
-        <Route exact path={'/'} component={Loginscreen} />
+//         <Route exact path={'/login'} component={Loginscreen} />
+        <Route exact path={"/"} component={Signin} />
+        <Route exact path={"/signup"} component={Signup} />
         {/* <Route
           exact
           path={"/signin"}

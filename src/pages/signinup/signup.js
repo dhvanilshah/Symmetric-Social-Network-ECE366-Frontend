@@ -2,7 +2,7 @@ import { Layout, Form, Icon, Input, Button, Checkbox } from "antd";
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import "antd/dist/antd.css";
-import "./signin.css";
+import "./signup.css";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import { connect } from "react-redux";
@@ -11,7 +11,7 @@ import authActions from "../../redux/auth/actions";
 const { login } = authActions;
 const { Content } = Layout;
 
-class Signin extends Component {
+class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = { redirectToReferrer: false };
@@ -60,19 +60,15 @@ class Signin extends Component {
             placeholder="Password"
             style={{ margin: "24px 0px" }}
           />
-          <Checkbox>Remember me</Checkbox>
-          <a className="login-form-forgot" href="">
-            Forgot password
-          </a>
           <Button
             type="primary"
             className="login-form-button"
             style={{ margin: "10px 0px 5px 0px" }}
-            onClick={() => login(token)}
+            // onClick={() => login(token)}
           >
-            Log in
+            Sign Up
           </Button>
-          Or<a href="/signup"> register now!</a>
+          Or <a href="/">sign in.</a>
         </Content>
         <Footer />
       </Layout>
@@ -85,4 +81,4 @@ export default connect(
     isLoggedIn: state.Auth.idToken !== null
   }),
   { login }
-)(Signin);
+)(Signup);
