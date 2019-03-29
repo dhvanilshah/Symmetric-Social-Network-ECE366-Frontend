@@ -1,10 +1,13 @@
-import React from "react";
+import React from 'react'
 import {
   Route,
   Redirect,
   Switch,
   BrowserRouter as Router
-} from "react-router-dom";
+} from "react-router-dom"
+import Home from './containers/home'
+import { connect } from 'react-redux'
+import Loginscreen from './containers/loginscreen.js'
 import { connect } from "react-redux";
 import Signin from "./pages/signin/signin";
 import Home from "./pages/home/home";
@@ -19,18 +22,19 @@ const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
       ) : (
         <Redirect
           to={{
-            pathname: "/",
+            pathname: '/',
             state: { from: props.location }
           }}
         />
       )
     }
   />
-);
+)
 const PublicRoutes = ({ isLoggedIn }) => {
   return (
     <Router>
       <Switch>
+//         <Route exact path={'/login'} component={Loginscreen} />
         <Route exact path={"/"} component={Signin} />
         <Route exact path={"/signup"} component={Signup} />
         {/* <Route
@@ -50,9 +54,9 @@ const PublicRoutes = ({ isLoggedIn }) => {
         />
       </Switch>
     </Router>
-  );
-};
+  )
+}
 
 export default connect(state => ({
   isLoggedIn: state.Auth.idToken !== null
-}))(PublicRoutes);
+}))(PublicRoutes)
