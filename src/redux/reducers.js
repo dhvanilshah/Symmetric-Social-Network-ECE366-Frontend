@@ -1,5 +1,5 @@
-import Auth from "./auth/reducer";
+import Auth from './auth/reducer'
 
 export default {
   Auth
-};
+}
