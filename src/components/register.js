@@ -92,4 +92,3 @@ const style = {
 }
 
 export default connect(null, mapDispatchToProps)(Register)
->>>>>>> b8721561508fdac312e66d9f32b8367250ec8efc
