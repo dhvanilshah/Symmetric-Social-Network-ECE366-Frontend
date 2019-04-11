@@ -8,7 +8,6 @@ import {
 import Home from './containers/home'
 import { connect } from 'react-redux'
 import Loginscreen from './containers/loginscreen.js'
-import { connect } from "react-redux";
 import Signin from "./pages/signin/signin";
 import Home from "./pages/home/home";
 import Signup from "./pages/signinup/signup";
