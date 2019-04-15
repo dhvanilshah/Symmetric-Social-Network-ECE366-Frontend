@@ -56,6 +56,26 @@ class Signup extends Component {
             prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
             type="password"
             placeholder="Password"
+            style={{ margin: "24px 0px 0px 0px" }}
+          />
+          <Input
+            type="email"
+            placeholder="email"
+            style={{ margin: "24px 0px 0px 0px" }}
+          />
+          <Input
+            type="first name"
+            placeholder="first name"
+            style={{ margin: "24px 0px 0px 0px" }}
+          />
+          <Input
+            type="last name"
+            placeholder="last name"
+            style={{ margin: "24px 0px 0px 0px" }}
+          />
+          <Input
+            type="service"
+            placeholder="music streaming service"
             style={{ margin: "24px 0px" }}
           />
           <Button
