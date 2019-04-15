@@ -1,9 +1,7 @@
 import { Menu, Dropdown, Avatar } from "antd";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import authActions from "../../redux/auth/actions";
-
-const { logout } = authActions;
+import { logout } from '../../redux/auth/actions'
 
 class ProfileCircle extends Component {
   render() {

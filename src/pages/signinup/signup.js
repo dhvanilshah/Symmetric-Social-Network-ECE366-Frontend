@@ -6,9 +6,7 @@ import "./signup.css";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import { connect } from "react-redux";
-import authActions from "../../redux/auth/actions";
-
-const { login } = authActions;
+import { loginRequest } from '../../redux/auth/actions'
 const { Content } = Layout;
 
 class Signup extends Component {
@@ -26,7 +24,7 @@ class Signup extends Component {
     }
   }
   render() {
-    const { isLoggedIn, login } = this.props;
+    const { isLoggedIn, loginRequest } = this.props;
     const { redirectToReferrer } = this.state;
     const token = 1;
     if (redirectToReferrer) {
@@ -80,5 +78,5 @@ export default connect(
   state => ({
     isLoggedIn: state.Auth.idToken !== null
   }),
-  { login }
+  { loginRequest }
 )(Signup);

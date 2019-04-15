@@ -6,9 +6,8 @@ import "./signin.css";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import { connect } from "react-redux";
-import authActions from "../../redux/auth/actions";
+import { loginRequest } from '../../redux/auth/actions'
 
-const { login } = authActions;
 const { Content } = Layout;
 
 class Signin extends Component {
@@ -26,7 +25,7 @@ class Signin extends Component {
     }
   }
   render() {
-    const { isLoggedIn, login } = this.props;
+    const { isLoggedIn, loginRequest } = this.props;
     const { redirectToReferrer } = this.state;
     const token = 1;
     if (redirectToReferrer) {
@@ -68,7 +67,7 @@ class Signin extends Component {
             type="primary"
             className="login-form-button"
             style={{ margin: "10px 0px 5px 0px" }}
-            onClick={() => login(token)}
+            onClick={() => loginRequest(token)}
           >
             Log in
           </Button>
@@ -84,5 +83,5 @@ export default connect(
   state => ({
     isLoggedIn: state.Auth.idToken !== null
   }),
-  { login }
+  { loginRequest }
 )(Signin);
