@@ -15,7 +15,7 @@ export function checkAuthorization (token) {
   }
 }
 
-export function loginRequest (token) { // can also be used for register success
+export function loginRequest (token) {
   return {
     type: LOGIN_REQUEST,
     token
@@ -33,6 +33,13 @@ export function registerUser (receipt) {
   return {
     type: REGISTER_USER,
     receipt
+  }
+}
+
+export function loginSuccess (token) {
+  return {
+    type: LOGIN_SUCCESS,
+    token
   }
 }
 

@@ -14,7 +14,8 @@ const { Content } = Layout;
 class Signin extends Component {
   constructor (props) {
     super(props)
-    this.state = { redirectToReferrer: false,
+    this.state = {
+      redirectToReferrer: false,
       username: '',
       password: ''
     }
@@ -25,7 +26,10 @@ class Signin extends Component {
     API.get('/login?username='+username+'&password='+password)
       .then(function (response) {
         console.log(response)
-        loginRequest(response.data.payload.value)
+        if (response.data.status === 'OK') {
+          loginRequest(response.data.payload.value)
+          // this.setState({ redirectToReferrer: true });
+        }
       })
       .catch(function (error) {
         console.log(error)
@@ -33,19 +37,30 @@ class Signin extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("1", this.props.isLoggedIn, nextProps.isLoggedIn)
     if (
       this.props.isLoggedIn !== nextProps.isLoggedIn &&
       nextProps.isLoggedIn === true
     ) {
+      console.log("2",this.props.isLoggedIn, nextProps.isLoggedIn)
       this.setState({ redirectToReferrer: true });
     }
+    console.log("3",this.props.isLoggedIn, nextProps.isLoggedIn)
   }
+
+  // componentDidMount () {
+  //   if (this.props.isLoggedIn === true) {
+  //     this.setState({ redirectToReferrer: true })
+  //   }
+  // }
+
   render() {
     const { isLoggedIn } = this.props
     const { redirectToReferrer } = this.state
+    console.log(this.state)
     const token = 1;
     if (redirectToReferrer) {
-      return <Redirect to={{ pathname: "/home" }} />;
+      return <Redirect to={{ pathname: "/" }} />;
     }
     return (
       <Layout className="layout">

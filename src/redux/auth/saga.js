@@ -43,7 +43,6 @@ export function * registerUser () {
 }
 
 export function * checkAuthorization () {
-      console.log('i am here')
   yield takeEvery(CHECK_AUTHORIZATION, function * () {
     const token = yield window.localStorage.getItem('token')
     if (token) {
