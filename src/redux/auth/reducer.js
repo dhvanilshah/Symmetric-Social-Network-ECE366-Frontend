@@ -17,10 +17,19 @@ const initState = {
 
 export default function authReducer (state = initState, action) {
   switch (action.type) {
+    case LOGIN_REQUEST:
+      return {
+        ...state,
+        idToken: action.token
+      }
     case LOGIN_SUCCESS:
       return {
         ...state,
         idToken: action.idToken
+        // userId: action.userId,
+        // firstName: action.firstName,
+        // lastName: action.lastName,
+        // role: action.role
       }
     case LOGOUT:
       console.log('logout')

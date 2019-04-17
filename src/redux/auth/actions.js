@@ -15,10 +15,11 @@ export function checkAuthorization (token) {
   }
 }
 
-export function loginRequest (token) {
+export function loginRequest (username, password) { // can also be used for register success
   return {
     type: LOGIN_REQUEST,
-    token
+    username,
+    password
   }
 }
 
@@ -29,17 +30,15 @@ export function logout (receipt) {
   }
 }
 
-export function registerUser (receipt) {
+export function registerUser (firstName, lastName, email, username, password, service) {
   return {
     type: REGISTER_USER,
-    receipt
-  }
-}
-
-export function loginSuccess (token) {
-  return {
-    type: LOGIN_SUCCESS,
-    token
+    firstName,
+    lastName,
+    email,
+    username,
+    password,
+    service
   }
 }
 
