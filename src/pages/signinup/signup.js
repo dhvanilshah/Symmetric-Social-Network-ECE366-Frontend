@@ -15,13 +15,14 @@ class Signup extends Component {
   constructor (props) {
     super(props)
     this.state = { redirectToReferrer: false,
+      registerSuccess: false,
       fullName: '',
       email: '',
       username: '',
       password: '',
       service: ''
     }
-    this.registerUser = this.registerUser.bind(this)
+    this.register = this.register.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -33,22 +34,33 @@ class Signup extends Component {
     }
   }
 
-  registerUser (fullName, email, username, password, service) {
-    console.log('yoooo')
-    API.get('/addUser?username='+{username}+'&password='+{password}+'&email='+{email}+'&fullName='+{fullName}+'&service='+(service))
+  register (fullName, email, username, password, service, registerUser) {
+    API.post('/addUser', {
+      name: fullName,
+      email: email,
+      password: password,
+      username: username,
+      service: service
+    })
       .then(function (response) {
-        console.log(response);
+        this.setState({ registerSuccess: true })
+        console.log(response)
       })
       .catch(function (error) {
-        console.log(error);
-      });
+        console.log(error)
+      })
   }
-  render() {
-    const { isLoggedIn, registerUser } = this.props;
-    const { redirectToReferrer } = this.state;
+
+  render () {
+    const { isLoggedIn } = this.props
+    const { redirectToReferrer } = this.state
+    const { registerSuccess } = this.state
     const token = 1;
     if (redirectToReferrer) {
-      return <Redirect to={{ pathname: "/home" }} />;
+      return <Redirect to={{ pathname: "/home" }} />
+    }
+    if (registerSuccess) {
+      return <Redirect to={{ pathname: "/" }} />
     }
     return (
       <Layout className="layout">
@@ -71,38 +83,38 @@ class Signup extends Component {
             prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
             placeholder="Username"
             style={{ margin: "24px 0px 0px 0px" }}
-            onChange={(event, newValue) => this.setState({ username: newValue })}
+            onChange={(event, newValue) => this.setState({ username: event.target.value })}
           />
           <Input
             prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
             type="password"
             placeholder="Password"
             style={{ margin: "24px 0px 0px 0px" }}
-            onChange={(event, newValue) => this.setState({ password: newValue })}
+            onChange={(event, newValue) => this.setState({ password: event.target.value })}
           />
           <Input
             type="email"
             placeholder="email"
             style={{ margin: "24px 0px 0px 0px" }}
-            onChange={(event, newValue) => this.setState({ email: newValue })}
+            onChange={(event, newValue) => this.setState({ email: event.target.value })}
           />
           <Input
             type="full name"
             placeholder="full name"
             style={{ margin: "24px 0px 0px 0px" }}
-            onChange={(event, newValue) => this.setState({ fullName: newValue })}
+            onChange={(event, newValue) => this.setState({ fullName: event.target.value })}
           />
           <Input
             type="service"
             placeholder="music streaming service"
             style={{ margin: "24px 0px" }}
-            onChange={(event, newValue) => this.setState({ service: newValue })}
+            onChange={(event, newValue) => this.setState({ service: event.target.value })}
           />
           <Button
             type="primary"
             className="login-form-button"
             style={{ margin: "10px 0px 5px 0px" }}
-            onClick={() => this.registerUser(this.fullName, this.email, this.username, this.password, this.service)}
+            onClick={() => this.register(this.fullName, this.email, this.username, this.password, this.service, this.props.registerUser)}
           >
             Sign Up
           </Button>
@@ -116,7 +128,7 @@ class Signup extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    registerUser: (fullName, email, username, password, service) => dispatch(registerUser(fullName, email, username, password, service))
+    registerUser: (receipt) => dispatch(registerUser(receipt))
   }
 }
 

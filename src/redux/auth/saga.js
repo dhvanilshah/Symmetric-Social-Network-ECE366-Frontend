@@ -35,26 +35,25 @@ export function * logout () {
 }
 
 export function * registerUser () {
-  yield takeEvery(REGISTER_USER, function * (payload) {
-    yield put({
-      type: LOGIN_SUCCESS,
-      idToken: payload.token
-    })
+  yield takeEvery(REGISTER_USER, function * () {
+    // yield put({
+    //
+    // })
   })
 }
 
-// export function* checkAuthorization() {
-//   yield takeEvery(actions.CHECK_AUTHORIZATION, function*() {
-//     // const token = getToken().get("token");
-//     const token = 0; // fix for now
-//     if (token) {
-//       yield put({
-//         type: actions.LOGIN_SUCCESS,
-//         idToken: token
-//       });
-//     }
-//   });
-// }
+export function * checkAuthorization () {
+      console.log('i am here')
+  yield takeEvery(CHECK_AUTHORIZATION, function * () {
+    const token = yield window.localStorage.getItem('token')
+    if (token) {
+      yield put({
+        type: LOGIN_SUCCESS,
+        idToken: token
+      })
+    }
+  })
+}
 
 // // export function* checkAuthorization() {
 // //   yield takeEvery(actions.CHECK_AUTHORIZATION, function*() {
@@ -76,6 +75,7 @@ export default function * rootSaga () {
     fork(loginSuccess),
     fork(loginError),
     fork(logout),
-    fork(registerUser)
+    fork(registerUser),
+    fork(checkAuthorization)
   ])
 }
