@@ -6,23 +6,24 @@ import "./signup.css";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import { connect } from "react-redux";
-import { registerUser } from '../../redux/auth/actions'
-import API from '../../api/api'
+import { registerUser } from "../../redux/auth/actions";
+import API from "../../api/api";
 
 const { Content } = Layout;
 
 class Signup extends Component {
-  constructor (props) {
-    super(props)
-    this.state = { redirectToReferrer: false,
+  constructor(props) {
+    super(props);
+    this.state = {
+      redirectToReferrer: false,
       registerSuccess: false,
-      fullName: '',
-      email: '',
-      username: '',
-      password: '',
-      service: ''
-    }
-    this.register = this.register.bind(this)
+      fullName: "",
+      email: "",
+      username: "",
+      password: "",
+      service: ""
+    };
+    this.register = this.register.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -34,33 +35,66 @@ class Signup extends Component {
     }
   }
 
-  register (fullName, email, username, password, service, registerUser) {
-    API.post('/addUser', {
+  register(fullName, email, username, password, service, registerUser) {
+    // API.post(
+    //   "/addUser",
+    //   {
+    //     headers: {
+    //       "Access-Control-Allow-Origin": "*",
+    //       "Content-Type": "application/x-www-form-urlencoded",
+    //       Accept: "application/json"
+    //     }
+    //   },
+    //   {
+    //     name: fullName,
+    //     email: email,
+    //     password: password,
+    //     username: username,
+    //     service: service
+    //   }
+    // )
+    //   .then(function(response) {
+    //     this.setState({ registerSuccess: true });
+    //     console.log(response);
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
+
+    const user = {
       name: fullName,
       email: email,
       password: password,
       username: username,
       service: service
+    };
+    fetch("http://localhost:9999/addUser", {
+      method: "post",
+      body: JSON.stringify(user)
     })
-      .then(function (response) {
-        this.setState({ registerSuccess: true })
-        console.log(response)
+      .then(function(response) {
+        console.log(response);
+        // return response.json();
       })
-      .catch(function (error) {
-        console.log(error)
-      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    // .then(function(data) {
+
+    //   ChromeSamples.log("Created Gist:", data.html_url);
+    // });
   }
 
-  render () {
-    const { isLoggedIn } = this.props
-    const { redirectToReferrer } = this.state
-    const { registerSuccess } = this.state
+  render() {
+    const { isLoggedIn } = this.props;
+    const { redirectToReferrer } = this.state;
+    const { registerSuccess } = this.state;
     const token = 1;
     if (redirectToReferrer) {
-      return <Redirect to={{ pathname: "/home" }} />
+      return <Redirect to={{ pathname: "/home" }} />;
     }
     if (registerSuccess) {
-      return <Redirect to={{ pathname: "/" }} />
+      return <Redirect to={{ pathname: "/" }} />;
     }
     return (
       <Layout className="layout">
@@ -83,38 +117,57 @@ class Signup extends Component {
             prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
             placeholder="Username"
             style={{ margin: "24px 0px 0px 0px" }}
-            onChange={(event, newValue) => this.setState({ username: event.target.value })}
+            onChange={(event, newValue) =>
+              this.setState({ username: event.target.value })
+            }
           />
           <Input
             prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
             type="password"
             placeholder="Password"
             style={{ margin: "24px 0px 0px 0px" }}
-            onChange={(event, newValue) => this.setState({ password: event.target.value })}
+            onChange={(event, newValue) =>
+              this.setState({ password: event.target.value })
+            }
           />
           <Input
             type="email"
             placeholder="email"
             style={{ margin: "24px 0px 0px 0px" }}
-            onChange={(event, newValue) => this.setState({ email: event.target.value })}
+            onChange={(event, newValue) =>
+              this.setState({ email: event.target.value })
+            }
           />
           <Input
             type="full name"
             placeholder="full name"
             style={{ margin: "24px 0px 0px 0px" }}
-            onChange={(event, newValue) => this.setState({ fullName: event.target.value })}
+            onChange={(event, newValue) =>
+              this.setState({ fullName: event.target.value })
+            }
           />
           <Input
             type="service"
             placeholder="music streaming service"
             style={{ margin: "24px 0px" }}
-            onChange={(event, newValue) => this.setState({ service: event.target.value })}
+            onChange={(event, newValue) =>
+              this.setState({ service: event.target.value })
+            }
           />
           <Button
             type="primary"
             className="login-form-button"
             style={{ margin: "10px 0px 5px 0px" }}
-            onClick={() => this.register(this.fullName, this.email, this.username, this.password, this.service, this.props.registerUser)}
+            onClick={() =>
+              this.register(
+                this.state.fullName,
+                this.state.email,
+                this.state.username,
+                this.state.password,
+                this.state.service,
+                this.props.registerUser
+              )
+            }
           >
             Sign Up
           </Button>
@@ -126,11 +179,11 @@ class Signup extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
-    registerUser: (receipt) => dispatch(registerUser(receipt))
-  }
-}
+    registerUser: receipt => dispatch(registerUser(receipt))
+  };
+};
 
 export default connect(
   state => ({
