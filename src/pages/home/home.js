@@ -9,7 +9,6 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { redirectToReferrer: true };
-    // console.log(this.props.isLoggedIn)
   }
 
   render() {
