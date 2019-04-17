@@ -7,29 +7,60 @@ import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import { connect } from "react-redux";
 import { loginRequest } from '../../redux/auth/actions'
+import API from '../../api/api'
 
 const { Content } = Layout;
 
 class Signin extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { redirectToReferrer: false };
+  constructor (props) {
+    super(props)
+    this.state = {
+      redirectToReferrer: false,
+      username: '',
+      password: ''
+    }
+    this.login = this.login.bind(this)
+  }
+
+  login (username, password, loginRequest) {
+    API.get('/login?username='+username+'&password='+password)
+      .then(function (response) {
+        console.log(response)
+        if (response.data.status === 'OK') {
+          loginRequest(response.data.payload.value)
+          // this.setState({ redirectToReferrer: true })
+        }
+      })
+      .catch(function (error) {
+        console.log(error)
+      });
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("1", this.props.isLoggedIn, nextProps.isLoggedIn)
     if (
       this.props.isLoggedIn !== nextProps.isLoggedIn &&
       nextProps.isLoggedIn === true
     ) {
+      // console.log("2",this.props.isLoggedIn, nextProps.isLoggedIn)
       this.setState({ redirectToReferrer: true });
     }
+    // console.log("3",this.props.isLoggedIn, nextProps.isLoggedIn)
   }
+
+  componentDidMount () {
+    if (this.props.isLoggedIn === true) {
+      this.setState({ redirectToReferrer: true })
+    }
+  }
+
   render() {
-    const { isLoggedIn, loginRequest } = this.props;
-    const { redirectToReferrer } = this.state;
+    const { isLoggedIn } = this.props
+    console.log(this.props)
+    const { redirectToReferrer } = this.state
     const token = 1;
     if (redirectToReferrer) {
-      return <Redirect to={{ pathname: "/home" }} />;
+      return <Redirect to={{ pathname: "/" }} />;
     }
     return (
       <Layout className="layout">
@@ -51,12 +82,14 @@ class Signin extends Component {
           <Input
             prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
             placeholder="Username"
+            onChange={(event, newValue) => this.setState({ username: event.target.value })}
             style={{ margin: "24px 0px 0px 0px" }}
           />
           <Input
             prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
             type="password"
             placeholder="Password"
+            onChange={(event, newValue) => this.setState({ password: event.target.value })}
             style={{ margin: "24px 0px" }}
           />
           <Checkbox>Remember me</Checkbox>
@@ -67,7 +100,7 @@ class Signin extends Component {
             type="primary"
             className="login-form-button"
             style={{ margin: "10px 0px 5px 0px" }}
-            onClick={() => loginRequest(token)}
+            onClick={() => this.login(this.state.username, this.state.password, this.props.loginRequest)}
           >
             Log in
           </Button>
@@ -79,9 +112,15 @@ class Signin extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loginRequest: (token) => dispatch(loginRequest(token))
+  }
+}
+
 export default connect(
   state => ({
     isLoggedIn: state.Auth.idToken !== null
   }),
-  { loginRequest }
+  mapDispatchToProps
 )(Signin);
