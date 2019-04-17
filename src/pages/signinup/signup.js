@@ -8,6 +8,7 @@ import Footer from "../../components/footer/footer";
 import { connect } from "react-redux";
 import { registerUser } from "../../redux/auth/actions";
 import API from "../../api/api";
+import { red } from "ansi-colors";
 
 const { Content } = Layout;
 
@@ -36,30 +37,7 @@ class Signup extends Component {
   }
 
   register(fullName, email, username, password, service, registerUser) {
-    // API.post(
-    //   "/addUser",
-    //   {
-    //     headers: {
-    //       "Access-Control-Allow-Origin": "*",
-    //       "Content-Type": "application/x-www-form-urlencoded",
-    //       Accept: "application/json"
-    //     }
-    //   },
-    //   {
-    //     name: fullName,
-    //     email: email,
-    //     password: password,
-    //     username: username,
-    //     service: service
-    //   }
-    // )
-    //   .then(function(response) {
-    //     this.setState({ registerSuccess: true });
-    //     console.log(response);
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
+    let verify = false;
 
     const user = {
       name: fullName,
@@ -68,21 +46,22 @@ class Signup extends Component {
       username: username,
       service: service
     };
-    fetch("http://localhost:9999/addUser", {
+    const redirect = fetch("http://localhost:9999/addUser", {
       method: "post",
       body: JSON.stringify(user)
     })
       .then(function(response) {
-        console.log(response);
-        // return response.json();
+        console.log("succss", response);
+        return true;
       })
       .catch(function(error) {
-        console.log(error);
+        console.log("error", error);
       });
-    // .then(function(data) {
 
-    //   ChromeSamples.log("Created Gist:", data.html_url);
-    // });
+    if (redirect) {
+      console.log("here");
+      this.setState({ redirectToReferrer: true });
+    }
   }
 
   render() {
@@ -91,7 +70,7 @@ class Signup extends Component {
     const { registerSuccess } = this.state;
     const token = 1;
     if (redirectToReferrer) {
-      return <Redirect to={{ pathname: "/home" }} />;
+      return <Redirect to={{ pathname: "/" }} />;
     }
     if (registerSuccess) {
       return <Redirect to={{ pathname: "/" }} />;
