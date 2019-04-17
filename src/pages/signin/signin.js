@@ -28,7 +28,7 @@ class Signin extends Component {
         console.log(response)
         if (response.data.status === 'OK') {
           loginRequest(response.data.payload.value)
-          // this.setState({ redirectToReferrer: true });
+          // this.setState({ redirectToReferrer: true })
         }
       })
       .catch(function (error) {
@@ -42,22 +42,22 @@ class Signin extends Component {
       this.props.isLoggedIn !== nextProps.isLoggedIn &&
       nextProps.isLoggedIn === true
     ) {
-      console.log("2",this.props.isLoggedIn, nextProps.isLoggedIn)
+      // console.log("2",this.props.isLoggedIn, nextProps.isLoggedIn)
       this.setState({ redirectToReferrer: true });
     }
-    console.log("3",this.props.isLoggedIn, nextProps.isLoggedIn)
+    // console.log("3",this.props.isLoggedIn, nextProps.isLoggedIn)
   }
 
-  // componentDidMount () {
-  //   if (this.props.isLoggedIn === true) {
-  //     this.setState({ redirectToReferrer: true })
-  //   }
-  // }
+  componentDidMount () {
+    if (this.props.isLoggedIn === true) {
+      this.setState({ redirectToReferrer: true })
+    }
+  }
 
   render() {
     const { isLoggedIn } = this.props
+    console.log(this.props)
     const { redirectToReferrer } = this.state
-    console.log(this.state)
     const token = 1;
     if (redirectToReferrer) {
       return <Redirect to={{ pathname: "/" }} />;
