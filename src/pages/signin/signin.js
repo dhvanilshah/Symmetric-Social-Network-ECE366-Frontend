@@ -18,16 +18,17 @@ class Signin extends Component {
       username: '',
       password: ''
     }
-    this.loginRequest = this.loginRequest.bind(this)
+    this.login = this.login.bind(this)
   }
 
-  loginRequest (username, password) {
-    API.get('/login?username='+{username}+'&password='+{password})
+  login (username, password, loginRequest) {
+    API.get('/login?username='+username+'&password='+password)
       .then(function (response) {
-        console.log(response);
+        console.log(response)
+        loginRequest(response.data.payload.value)
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error)
       });
   }
 
@@ -40,8 +41,8 @@ class Signin extends Component {
     }
   }
   render() {
-    const { isLoggedIn, loginRequest } = this.props;
-    const { redirectToReferrer } = this.state;
+    const { isLoggedIn } = this.props
+    const { redirectToReferrer } = this.state
     const token = 1;
     if (redirectToReferrer) {
       return <Redirect to={{ pathname: "/home" }} />;
@@ -66,14 +67,14 @@ class Signin extends Component {
           <Input
             prefix={<Icon type="user" style={{ color: "rgba(0,0,0,.25)" }} />}
             placeholder="Username"
-            onChange={(event, newValue) => this.setState({ username: newValue })}
+            onChange={(event, newValue) => this.setState({ username: event.target.value })}
             style={{ margin: "24px 0px 0px 0px" }}
           />
           <Input
             prefix={<Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />}
             type="password"
             placeholder="Password"
-            onChange={(event, newValue) => this.setState({ password: newValue })}
+            onChange={(event, newValue) => this.setState({ password: event.target.value })}
             style={{ margin: "24px 0px" }}
           />
           <Checkbox>Remember me</Checkbox>
@@ -84,7 +85,7 @@ class Signin extends Component {
             type="primary"
             className="login-form-button"
             style={{ margin: "10px 0px 5px 0px" }}
-            onClick={() => this.loginRequest(this.state.username, this.state.password)}
+            onClick={() => this.login(this.state.username, this.state.password, this.props.loginRequest)}
           >
             Log in
           </Button>
@@ -98,7 +99,7 @@ class Signin extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loginRequest: (username, password) => dispatch(loginRequest(username, password))
+    loginRequest: (token) => dispatch(loginRequest(token))
   }
 }
 
