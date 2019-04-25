@@ -4,6 +4,7 @@ import "antd/dist/antd.css";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import { connect } from "react-redux";
+import Postbox from "../../components/post/postInput";
 
 class Home extends Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class Home extends Component {
   render() {
     return (
       <Layout className="layout">
+        <Postbox />
         <Header />
         <Footer />
       </Layout>
