@@ -5,6 +5,7 @@ import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import { connect } from "react-redux";
 import FriendsList from "../../components/friendslist/friendslist";
+import Feed from "../../components/feed/feed";
 const { Content } = Layout;
 class Home extends Component {
   constructor(props) {
@@ -40,14 +41,15 @@ class Home extends Component {
                     marginBottom: "16px"
                   }}
                 >
-                  Hello
+                  Home
                 </Row>
                 <Row
                   style={{
-                    background: "white"
+                    background: "white",
+                    padding: "16px"
                   }}
                 >
-                  World
+                  <Feed />
                 </Row>
               </div>
             </Col>
