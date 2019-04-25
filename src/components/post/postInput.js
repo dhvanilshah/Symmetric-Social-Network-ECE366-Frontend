@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "antd/dist/antd.css";
 import { Input, Button } from "antd";
+import { connect } from "react-redux";
 import { loginRequest } from "../../redux/auth/actions";
 
 const { TextArea } = Input;
@@ -31,9 +32,9 @@ class postBox extends Component {
       method: "post",
       headers: new Headers({
         "content-type": "application/json",
-        access_token: "Bearer " + window.localStorage.getItem("idToken")
+        access_token: "Bearer " + window.localStorage.getItem("token")
       }),
-      body: JSON.stringify(user)
+      body: JSON.stringify(userId)
     })
       .then(function(response) {
         console.log("success", response);
