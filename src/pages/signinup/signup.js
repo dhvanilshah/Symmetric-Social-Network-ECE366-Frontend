@@ -51,7 +51,7 @@ class Signup extends Component {
       body: JSON.stringify(user)
     })
       .then(function(response) {
-        console.log("succss", response);
+        console.log("success", response);
         return true;
       })
       .catch(function(error) {

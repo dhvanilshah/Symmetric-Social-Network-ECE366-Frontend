@@ -52,7 +52,6 @@ class Signin extends Component {
 
   render() {
     const { isLoggedIn } = this.props
-    console.log(this.props)
     const { redirectToReferrer } = this.state
     const token = 1;
     if (redirectToReferrer) {
