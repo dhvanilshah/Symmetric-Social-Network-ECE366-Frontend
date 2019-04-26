@@ -6,6 +6,7 @@ import Footer from "../../components/footer/footer";
 import { connect } from "react-redux";
 import FriendsList from "../../components/friendslist/friendslist";
 import Feed from "../../components/feed/feed";
+import Post from "../../components/postbox/postbox";
 const { Content } = Layout;
 class Home extends Component {
   constructor(props) {
@@ -31,7 +32,6 @@ class Home extends Component {
               <div
                 style={{
                   height: window.innerHeight * 0.79,
-                  background: "blue",
                   overflowY: "scroll"
                 }}
               >
@@ -41,7 +41,7 @@ class Home extends Component {
                     marginBottom: "16px"
                   }}
                 >
-                  Home
+                  <Post />
                 </Row>
                 <Row
                   style={{

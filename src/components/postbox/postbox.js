@@ -1,6 +1,9 @@
-import { Layout, Popover, List, Avatar, Icon, Button, message } from "antd";
+import { Input, Row, Col, Button } from "antd";
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import SongSearch from "../songserach/songsearch";
+
+const { TextArea } = Input;
 
 const data = [
   {
@@ -41,34 +44,55 @@ const data = [
   }
 ];
 
-class FriendList extends Component {
+class Post extends Component {
   render() {
     const { isLoggedIn } = this.props;
     return (
-      <List
-        itemLayout="horizontal"
-        header={<h1>Friends List</h1>}
-        dataSource={data}
-        renderItem={item => (
-          <List.Item
-            onClick={() => console.log("Do Something Here")}
-            actions={[
-              <Button>
-                <Icon type="message" theme="outlined" />
-              </Button>
-            ]}
+      <Row gutter={16}>
+        <Col
+          span={16}
+          push={8}
+          style={{
+            paddingLeft: "16px",
+            paddingRight: "16px",
+            paddingTop: "8px"
+          }}
+        >
+          <TextArea placeholder="Add a Message" rows={13} />
+          <Button
+            style={{ float: "right", marginTop: "8px", marginBottom: "8px" }}
           >
-            <List.Item.Meta
-              title={<a href="https://ant.design">{item.title}</a>}
-              description="username"
-            />
-          </List.Item>
-        )}
-      />
+            Post
+          </Button>
+        </Col>
+        <Col span={8} pull={16}>
+          {/* <img
+            width="300px"
+            height="290px"
+            src={
+              "https://99designs-blog.imgix.net/blog/wp-content/uploads/2017/12/attachment_68585523.jpg?auto=format&q=60&fit=max&w=930"
+            }
+          />
+          <div height="100px">
+            <p>Song Name</p>
+            <p>Artist</p>
+          </div> */}
+          <div
+            style={{
+              width: "100%",
+              marginTop: "8px",
+              marginLeft: "8px",
+              marginRight: "16px"
+            }}
+          >
+            <SongSearch />
+          </div>
+        </Col>
+      </Row>
     );
   }
 }
 
 export default connect(state => ({
   isLoggedIn: state.Auth.idToken !== null
-}))(FriendList);
+}))(Post);

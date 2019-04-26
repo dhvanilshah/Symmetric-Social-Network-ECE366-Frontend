@@ -9,13 +9,13 @@ const OptGroup = AutoComplete.OptGroup;
 const filler = [
   {
     id: "null",
-    name: "Search For Users Here"
+    name: "Search For Songs Here"
   }
 ];
 
 // FULL USAGE DETAIL: https://ant.design/components/auto-complete/
 
-class Complete extends Component {
+class SongSearch extends Component {
   constructor(props) {
     super(props);
     this.state = { data: null };
@@ -33,9 +33,9 @@ class Complete extends Component {
       data != null
         ? data.map(opt => (
             <Option key={opt.id} value={opt.id}>
-              <div style={{ display: "inline-block" }}>
-                <p>{opt.name}</p>
-                <Button>
+              <div>
+                {opt.name}
+                <Button stlye={{ float: "right" }}>
                   <Icon type="plus" />
                 </Button>
               </div>
@@ -43,13 +43,7 @@ class Complete extends Component {
           ))
         : filler.map(opt => (
             <Option key={opt.id} value={opt.id}>
-              <div style={{ display: "inline-block" }}>
-                <p>{opt.name}</p>
-                <Button
-                  icon="plus"
-                  // onClick={() => this.login(this.state.username, this.state.password, this.props.loginRequest)}
-                />
-              </div>
+              <div>{opt.name}</div>
             </Option>
           ));
     return (
@@ -58,11 +52,11 @@ class Complete extends Component {
           className="certain-category-search"
           dropdownClassName="certain-category-search-dropdown"
           dropdownMatchSelectWidth={false}
-          dropdownStyle={{ width: 300 }}
+          dropdownStyle={{ width: 250 }}
           size="large"
-          style={{ width: "100%" }}
+          style={{ width: "290px" }}
           dataSource={options}
-          placeholder="input here"
+          placeholder="Search for a Song"
           optionLabelProp="value"
           onChange={value => this.updateData(value)}
         >
@@ -75,4 +69,4 @@ class Complete extends Component {
   }
 }
 
-export default Complete;
+export default SongSearch;
