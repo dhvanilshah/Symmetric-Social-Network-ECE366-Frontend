@@ -1,7 +1,7 @@
-import { Menu, Dropdown, Avatar } from "antd";
+import { Menu, Dropdown, Icon } from "antd";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { logout } from '../../redux/auth/actions'
+import { logout } from "../../redux/auth/actions";
 
 class ProfileCircle extends Component {
   render() {
@@ -30,7 +30,15 @@ class ProfileCircle extends Component {
     );
     return (
       <Dropdown overlay={menu}>
-        <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+        <Icon
+          type="user"
+          style={{
+            fontSize: "20px",
+            marginLeft: "16px",
+            marginTop: 0,
+            marginBottom: 0
+          }}
+        />
       </Dropdown>
     );
   }

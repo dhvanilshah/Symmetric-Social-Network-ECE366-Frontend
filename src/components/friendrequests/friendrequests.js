@@ -41,8 +41,16 @@ class FriendRequests extends Component {
   render() {
     const { isLoggedIn } = this.props;
     return (
-      <Popover content={content} title="Friend Requests" trigger="click">
-        <Icon type="usergroup-add" />
+      <Popover
+        placement="bottomRight"
+        content={content}
+        title="Friend Requests"
+        trigger="click"
+      >
+        <Icon
+          style={{ fontSize: "20px", marginTop: 0, marginBottom: 0 }}
+          type="usergroup-add"
+        />
       </Popover>
     );
   }

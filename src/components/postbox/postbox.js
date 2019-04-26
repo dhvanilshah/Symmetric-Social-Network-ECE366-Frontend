@@ -45,8 +45,15 @@ const data = [
 ];
 
 class Post extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      posted: false
+    };
+  }
+
   render() {
-    const { isLoggedIn } = this.props;
+    const { posted } = this.state;
     return (
       <Row gutter={16}>
         <Col
@@ -61,32 +68,40 @@ class Post extends Component {
           <TextArea placeholder="Add a Message" rows={13} />
           <Button
             style={{ float: "right", marginTop: "8px", marginBottom: "8px" }}
+            onClick={() => {
+              this.setState({ posted: !posted });
+            }}
           >
             Post
           </Button>
         </Col>
         <Col span={8} pull={16}>
-          {/* <img
-            width="300px"
-            height="290px"
-            src={
-              "https://99designs-blog.imgix.net/blog/wp-content/uploads/2017/12/attachment_68585523.jpg?auto=format&q=60&fit=max&w=930"
-            }
-          />
-          <div height="100px">
-            <p>Song Name</p>
-            <p>Artist</p>
-          </div> */}
-          <div
-            style={{
-              width: "100%",
-              marginTop: "8px",
-              marginLeft: "8px",
-              marginRight: "16px"
-            }}
-          >
-            <SongSearch />
-          </div>
+          {posted ? (
+            <div>
+              <img
+                width="300px"
+                height="290px"
+                src={
+                  "https://99designs-blog.imgix.net/blog/wp-content/uploads/2017/12/attachment_68585523.jpg?auto=format&q=60&fit=max&w=930"
+                }
+              />
+              <div height="100px">
+                <p>Song Name</p>
+                <p>Artist</p>
+              </div>
+            </div>
+          ) : (
+            <div
+              style={{
+                width: "100%",
+                marginTop: "8px",
+                marginLeft: "8px",
+                marginRight: "16px"
+              }}
+            >
+              <SongSearch />
+            </div>
+          )}
         </Col>
       </Row>
     );
