@@ -65,7 +65,7 @@ class Post extends Component {
             paddingTop: "8px"
           }}
         >
-          <TextArea placeholder="Add a Message" rows={13} />
+          <TextArea placeholder="Add a Message" rows={5} />
           <Button
             style={{ float: "right", marginTop: "8px", marginBottom: "8px" }}
             onClick={() => {
@@ -77,19 +77,42 @@ class Post extends Component {
         </Col>
         <Col span={8} pull={16}>
           {posted ? (
-            <div>
-              <img
-                width="300px"
-                height="290px"
-                src={
-                  "https://99designs-blog.imgix.net/blog/wp-content/uploads/2017/12/attachment_68585523.jpg?auto=format&q=60&fit=max&w=930"
-                }
-              />
-              <div height="100px">
-                <p>Song Name</p>
-                <p>Artist</p>
-              </div>
-            </div>
+            // <div>
+            //   <img
+            //     width="300px"
+            //     height="290px"
+            //     src={
+            //       "https://99designs-blog.imgix.net/blog/wp-content/uploads/2017/12/attachment_68585523.jpg?auto=format&q=60&fit=max&w=930"
+            //     }
+            //   />
+            //   <div height="100px">
+            //     <p>Song Name</p>
+            //     <p>Artist</p>
+            //   </div>
+            // </div>
+            <Row
+              style={{
+                marginTop: "8px",
+                marginLeft: "8px",
+                marginRight: "16px"
+              }}
+            >
+              <Col span={14}>
+                <img
+                  width="150px"
+                  height="150px"
+                  src={
+                    "https://99designs-blog.imgix.net/blog/wp-content/uploads/2017/12/attachment_68585523.jpg?auto=format&q=60&fit=max&w=930"
+                  }
+                />
+              </Col>
+              <Col span={10} style={{ paddingLeft: "16px" }}>
+                <div height="100px">
+                  <p>Song Name</p>
+                  <p>Artist</p>
+                </div>
+              </Col>
+            </Row>
           ) : (
             <div
               style={{

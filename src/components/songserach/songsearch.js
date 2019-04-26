@@ -9,7 +9,7 @@ const OptGroup = AutoComplete.OptGroup;
 const filler = [
   {
     id: "null",
-    name: "Search For Songs Here"
+    name: "Search For Song Here"
   }
 ];
 
