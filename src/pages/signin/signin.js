@@ -28,7 +28,6 @@ class Signin extends Component {
         console.log(response)
         if (response.data.status === 'OK') {
           loginRequest(response.data.payload.value)
-          // this.setState({ redirectToReferrer: true })
         }
       })
       .catch(function (error) {
@@ -37,15 +36,12 @@ class Signin extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("1", this.props.isLoggedIn, nextProps.isLoggedIn)
     if (
       this.props.isLoggedIn !== nextProps.isLoggedIn &&
       nextProps.isLoggedIn === true
     ) {
-      // console.log("2",this.props.isLoggedIn, nextProps.isLoggedIn)
       this.setState({ redirectToReferrer: true });
     }
-    // console.log("3",this.props.isLoggedIn, nextProps.isLoggedIn)
   }
 
   componentDidMount () {
@@ -56,7 +52,6 @@ class Signin extends Component {
 
   render() {
     const { isLoggedIn } = this.props
-    console.log(this.props)
     const { redirectToReferrer } = this.state
     const token = 1;
     if (redirectToReferrer) {

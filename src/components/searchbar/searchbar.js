@@ -33,9 +33,11 @@ class Complete extends Component {
       data != null
         ? data.map(opt => (
             <Option key={opt.id} value={opt.id}>
+
               <div style={{ display: "inline-block" }}>
                 <p>{opt.name}</p>
                 <Button>
+
                   <Icon type="plus" />
                 </Button>
               </div>
@@ -43,12 +45,14 @@ class Complete extends Component {
           ))
         : filler.map(opt => (
             <Option key={opt.id} value={opt.id}>
+
               <div style={{ display: "inline-block" }}>
                 <p>{opt.name}</p>
                 <Button
                   icon="plus"
                   // onClick={() => this.login(this.state.username, this.state.password, this.props.loginRequest)}
                 />
+
               </div>
             </Option>
           ));

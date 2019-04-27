@@ -1,4 +1,4 @@
-import { all, takeEvery, put, fork, call } from 'redux-saga/effects'
+import { all, takeEvery, put, fork, call } from "redux-saga/effects";
 import {
   CHECK_AUTHORIZATION,
   LOGIN_REQUEST,
@@ -6,52 +6,52 @@ import {
   LOGIN_SUCCESS,
   LOGIN_ERROR,
   REGISTER_USER
-} from './actiontypes.js'
+} from "./actiontypes.js";
 
-export function * loginRequest () {
-  yield takeEvery('LOGIN_REQUEST', function * (payload) {
+export function* loginRequest() {
+  yield takeEvery("LOGIN_REQUEST", function*(payload) {
     yield put({
       type: LOGIN_SUCCESS,
       idToken: payload.token
-    })
-  })
+    });
+  });
 }
 
-export function * loginSuccess () {
-  yield takeEvery(LOGIN_SUCCESS, function * (payload) {
-    yield window.localStorage.setItem('token', payload.idToken)
-  })
+export function* loginSuccess() {
+  yield takeEvery(LOGIN_SUCCESS, function*(payload) {
+    yield window.localStorage.setItem("token", payload.idToken);
+  });
 }
 
-export function * loginError () {
-  yield takeEvery(LOGIN_ERROR, function * () {})
+export function* loginError() {
+  yield takeEvery(LOGIN_ERROR, function*() {});
 }
 
-export function * logout () {
-  yield takeEvery(LOGOUT, function * () {
-    console.log('removing-token')
-    window.localStorage.removeItem('token')
-  })
+export function* logout() {
+  yield takeEvery(LOGOUT, function*() {
+    console.log("removing-token");
+    window.localStorage.removeItem("token");
+  });
 }
 
-export function * registerUser () {
-  yield takeEvery(REGISTER_USER, function * () {
+export function* registerUser() {
+  yield takeEvery(REGISTER_USER, function*() {
     // yield put({
     //
     // })
-  })
+  });
 }
 
-export function * checkAuthorization () {
-  yield takeEvery(CHECK_AUTHORIZATION, function * () {
-    const token = yield window.localStorage.getItem('token')
+export function* checkAuthorization() {
+  yield takeEvery(CHECK_AUTHORIZATION, function*() {
+    const token = yield window.localStorage.getItem("token");
     if (token) {
       yield put({
         type: LOGIN_SUCCESS,
         idToken: token
-      })
+      });
     }
-  })
+  });
 }
 
 // // export function* checkAuthorization() {
@@ -67,7 +67,7 @@ export function * checkAuthorization () {
 // //   });
 // // }
 
-export default function * rootSaga () {
+export default function* rootSaga() {
   yield all([
     // fork(checkAuthorization),
     fork(loginRequest),
@@ -76,5 +76,5 @@ export default function * rootSaga () {
     fork(logout),
     fork(registerUser),
     fork(checkAuthorization)
-  ])
+  ]);
 }

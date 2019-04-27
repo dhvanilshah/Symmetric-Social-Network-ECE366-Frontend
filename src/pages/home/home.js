@@ -4,21 +4,28 @@ import "antd/dist/antd.css";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import { connect } from "react-redux";
+
+import Postbox from "../../components/post/postInput";
+
+
 import FriendsList from "../../components/friendslist/friendslist";
 import Feed from "../../components/feed/feed";
 import Post from "../../components/postbox/postbox";
 const { Content } = Layout;
+
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = { redirectToReferrer: true };
-    // console.log(this.props.isLoggedIn)
   }
 
   render() {
     return (
       <Layout className="layout">
         <Header />
+
+        <Postbox />
+
         <Content
           style={{
             padding: "16px",
@@ -72,6 +79,7 @@ class Home extends Component {
             </Col>
           </Row>
         </Content>
+
         <Footer />
       </Layout>
     );

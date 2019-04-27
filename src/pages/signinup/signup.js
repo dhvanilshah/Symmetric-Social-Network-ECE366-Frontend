@@ -22,7 +22,7 @@ class Signup extends Component {
       email: "",
       username: "",
       password: "",
-      service: ""
+      birthday: ""
     };
     this.register = this.register.bind(this);
   }
@@ -36,7 +36,7 @@ class Signup extends Component {
     }
   }
 
-  register(fullName, email, username, password, service, registerUser) {
+  register(fullName, email, username, password, birthday, registerUser) {
     let verify = false;
 
     const user = {
@@ -44,14 +44,14 @@ class Signup extends Component {
       email: email,
       password: password,
       username: username,
-      service: service
+      birthday: birthday
     };
     const redirect = fetch("http://localhost:9999/addUser", {
       method: "post",
       body: JSON.stringify(user)
     })
       .then(function(response) {
-        console.log("succss", response);
+        console.log("success", response);
         return true;
       })
       .catch(function(error) {
@@ -126,11 +126,11 @@ class Signup extends Component {
             }
           />
           <Input
-            type="service"
-            placeholder="music streaming service"
+            type="birthday"
+            placeholder="birthday"
             style={{ margin: "24px 0px" }}
             onChange={(event, newValue) =>
-              this.setState({ service: event.target.value })
+              this.setState({ birthday: event.target.value })
             }
           />
           <Button
@@ -143,7 +143,7 @@ class Signup extends Component {
                 this.state.email,
                 this.state.username,
                 this.state.password,
-                this.state.service,
+                this.state.birthday,
                 this.props.registerUser
               )
             }
