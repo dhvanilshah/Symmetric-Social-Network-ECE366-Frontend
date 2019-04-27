@@ -1,4 +1,4 @@
-import { Icon, Input, AutoComplete, Button } from "antd";
+import { Icon, Input, AutoComplete, Button, Row, Col } from "antd";
 import React, { Component } from "react";
 import Search from "antd/lib/transfer/search";
 import API from "../../api/api";
@@ -8,7 +8,7 @@ const OptGroup = AutoComplete.OptGroup;
 
 const filler = [
   {
-    id: "null",
+    id: "something random",
     name: "Search For Users Here"
   }
 ];
@@ -33,27 +33,24 @@ class Complete extends Component {
       data != null
         ? data.map(opt => (
             <Option key={opt.id} value={opt.id}>
-
-              <div style={{ display: "inline-block" }}>
-                <p>{opt.name}</p>
-                <Button>
-
-                  <Icon type="plus" />
-                </Button>
-              </div>
+              <Row>
+                <Col span={6} push={18}>
+                  <Button
+                    icon="plus"
+                    style={{ width: "100%", marginTop: "16px" }}
+                    // onClick={() => this.login(this.state.username, this.state.password, this.props.loginRequest)}
+                  />
+                </Col>
+                <Col span={18} pull={6}>
+                  <h4>{opt.name}</h4>
+                  <p>{opt.id}</p>
+                </Col>
+              </Row>
             </Option>
           ))
         : filler.map(opt => (
             <Option key={opt.id} value={opt.id}>
-
-              <div style={{ display: "inline-block" }}>
-                <p>{opt.name}</p>
-                <Button
-                  icon="plus"
-                  // onClick={() => this.login(this.state.username, this.state.password, this.props.loginRequest)}
-                />
-
-              </div>
+              {opt.name}
             </Option>
           ));
     return (
@@ -62,11 +59,11 @@ class Complete extends Component {
           className="certain-category-search"
           dropdownClassName="certain-category-search-dropdown"
           dropdownMatchSelectWidth={false}
-          dropdownStyle={{ width: 300 }}
+          dropdownStyle={{ width: 250 }}
           size="large"
-          style={{ width: "100%" }}
+          style={{ width: "200px" }}
           dataSource={options}
-          placeholder="input here"
+          placeholder="Search for a User"
           optionLabelProp="value"
           onChange={value => this.updateData(value)}
         >
