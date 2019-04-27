@@ -2,6 +2,8 @@ import { Icon, Input, AutoComplete, Col, Row } from "antd";
 import React, { Component } from "react";
 import Search from "antd/lib/transfer/search";
 import API from "../../api/api";
+import { updateSong } from "../../redux/song/actions";
+import { connect } from "react-redux";
 
 const Option = AutoComplete.Option;
 const OptGroup = AutoComplete.OptGroup;
@@ -20,6 +22,11 @@ class SongSearch extends Component {
     super(props);
     this.state = { data: null };
     this.updateData = this.updateData.bind(this);
+    this.selectSong = this.selectSong.bind(this);
+  }
+
+  selectSong(opt) {
+    this.props.updateSong(opt.map);
   }
 
   async updateData(value) {
@@ -35,12 +42,17 @@ class SongSearch extends Component {
 
   render() {
     const { data } = this.state;
-    console.log(data);
     const options =
       data != null
         ? data.map((opt, key) => {
             return (
-              <Option key={key} value={opt.map.url}>
+              <Option
+                key={key}
+                value={opt.map.url}
+                onClick={e => {
+                  this.selectSong(opt);
+                }}
+              >
                 <Row>
                   <Col span={6}>
                     <img
@@ -85,4 +97,15 @@ class SongSearch extends Component {
   }
 }
 
-export default SongSearch;
+const mapDispatchToProps = dispatch => {
+  return {
+    updateSong: song => dispatch(updateSong(song))
+  };
+};
+
+export default connect(
+  state => ({
+    isLoggedIn: state.Auth.idToken !== null
+  }),
+  mapDispatchToProps
+)(SongSearch);
