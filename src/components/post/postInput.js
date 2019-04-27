@@ -54,7 +54,7 @@ class postBox extends Component {
             this.setState({ receiverId: event.target.value })
           }
         />
-        <Input
+        <TextArea
           placeholder="Enter your comment"
           autosize={{ minRows: 2, maxRows: 6 }}
           onChange={(event, newValue) =>
@@ -71,7 +71,6 @@ class postBox extends Component {
         <Button
           type="primary"
           className="post-button"
-          style={{ margin: "10px 0px 5px 0px" }}
           onClick={() =>
             this.submitPost(
               this.state.message,
@@ -80,7 +79,9 @@ class postBox extends Component {
               this.state.userId
             )
           }
-        />
+        >
+          {"Submit"}
+        </Button>
       </div>
     );
   }

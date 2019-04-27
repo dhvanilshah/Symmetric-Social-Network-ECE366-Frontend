@@ -32,27 +32,28 @@ class Complete extends Component {
     const options =
       data != null
         ? data.map(opt => (
-          <Option key={opt.id} value={opt.id}>
-            <div>
-              {opt.name}
-              <Button stlye={{ float: "right" }}>
-                <Icon type="plus" />
-              </Button>
-            </div>
-          </Option>
-        ))
+            <Option key={opt.id} value={opt.id}>
+              <div>
+                {opt.name}
+                <Button stlye={{ float: "right" }}>
+                  <Icon type="plus" />
+                </Button>
+              </div>
+            </Option>
+          ))
         : filler.map(opt => (
-          <Option key={opt.id} value={opt.id}>
-            <div>
-              {opt.name}
-              <Button stlye={{ float: "right" }}
-              // onClick={() => this.login(this.state.username, this.state.password, this.props.loginRequest)}
-              >
-                <Icon type="plus" />
-              </Button>
-            </div>
-          </Option>
-        ));
+            <Option key={opt.id} value={opt.id}>
+              <div>
+                {opt.name}
+                <Button
+                  stlye={{ float: "right" }}
+                  // onClick={() => this.login(this.state.username, this.state.password, this.props.loginRequest)}
+                >
+                  <Icon type="plus" />
+                </Button>
+              </div>
+            </Option>
+          ));
     return (
       <div className="certain-category-search-wrapper" style={{ width: 250 }}>
         <AutoComplete

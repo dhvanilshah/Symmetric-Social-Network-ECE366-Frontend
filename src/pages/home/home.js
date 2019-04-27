@@ -15,8 +15,8 @@ class Home extends Component {
   render() {
     return (
       <Layout className="layout">
-        <Postbox />
         <Header />
+        <Postbox />
         <Footer />
       </Layout>
     );
