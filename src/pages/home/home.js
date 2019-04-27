@@ -7,10 +7,10 @@ import { connect } from "react-redux";
 
 import Postbox from "../../components/post/postInput";
 
-
 import FriendsList from "../../components/friendslist/friendslist";
 import Feed from "../../components/feed/feed";
 import Post from "../../components/postbox/postbox";
+import Songsearch from "../../components/songserach/songsearch";
 const { Content } = Layout;
 
 class Home extends Component {
@@ -23,9 +23,6 @@ class Home extends Component {
     return (
       <Layout className="layout">
         <Header />
-
-        <Postbox />
-
         <Content
           style={{
             padding: "16px",
@@ -48,7 +45,8 @@ class Home extends Component {
                     marginBottom: "16px"
                   }}
                 >
-                  <Post />
+                  <Songsearch />
+                  <Postbox />
                 </Row>
                 <Row
                   style={{
@@ -79,7 +77,6 @@ class Home extends Component {
             </Col>
           </Row>
         </Content>
-
         <Footer />
       </Layout>
     );
