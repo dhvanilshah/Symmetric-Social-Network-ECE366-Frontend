@@ -1,4 +1,4 @@
-import { Icon, Input, AutoComplete, Button } from "antd";
+import { Icon, Input, AutoComplete, Col, Row } from "antd";
 import React, { Component } from "react";
 import Search from "antd/lib/transfer/search";
 import API from "../../api/api";
@@ -9,13 +9,13 @@ const OptGroup = AutoComplete.OptGroup;
 const filler = [
   {
     id: "null",
-    name: "Search For Users Here"
+    name: "Search For Song Here"
   }
 ];
 
 // FULL USAGE DETAIL: https://ant.design/components/auto-complete/
 
-class Complete extends Component {
+class SongSearch extends Component {
   constructor(props) {
     super(props);
     this.state = { data: null };
@@ -23,8 +23,14 @@ class Complete extends Component {
   }
 
   async updateData(value) {
-    const data = await API.get("getUser/" + value.toString());
-    this.setState({ data: data.data });
+    this.setState({ data: null });
+    const data = await API.get("song/" + value.toString());
+    if (data != null) {
+      if (data.data.length > 5) {
+        data.data = data.data.slice(0, 5);
+      }
+      this.setState({ data: data.data });
+    }
   }
 
   render() {
@@ -32,28 +38,25 @@ class Complete extends Component {
     const options =
       data != null
         ? data.map(opt => (
-            <Option key={opt.id} value={opt.id}>
-
-              <div style={{ display: "inline-block" }}>
-                <p>{opt.name}</p>
-                <Button>
-
-                  <Icon type="plus" />
-                </Button>
-              </div>
+            <Option key={opt.map.title} value={opt.map.title}>
+              <Row>
+                <Col span={6}>
+                  <img
+                    width="50px"
+                    height="50px"
+                    src={opt.map.album.toString()}
+                  />
+                </Col>
+                <Col span={18}>
+                  <div>{opt.map.title}</div>
+                  <div>by {opt.map.artist}</div>
+                </Col>
+              </Row>
             </Option>
           ))
         : filler.map(opt => (
             <Option key={opt.id} value={opt.id}>
-
-              <div style={{ display: "inline-block" }}>
-                <p>{opt.name}</p>
-                <Button
-                  icon="plus"
-                  // onClick={() => this.login(this.state.username, this.state.password, this.props.loginRequest)}
-                />
-
-              </div>
+              <div>{opt.name}</div>
             </Option>
           ));
     return (
@@ -62,11 +65,11 @@ class Complete extends Component {
           className="certain-category-search"
           dropdownClassName="certain-category-search-dropdown"
           dropdownMatchSelectWidth={false}
-          dropdownStyle={{ width: 300 }}
+          dropdownStyle={{ width: 250 }}
           size="large"
-          style={{ width: "100%" }}
+          style={{ width: "290px" }}
           dataSource={options}
-          placeholder="input here"
+          placeholder="Search for a Song"
           optionLabelProp="value"
           onChange={value => this.updateData(value)}
         >
@@ -79,4 +82,4 @@ class Complete extends Component {
   }
 }
 
-export default Complete;
+export default SongSearch;
