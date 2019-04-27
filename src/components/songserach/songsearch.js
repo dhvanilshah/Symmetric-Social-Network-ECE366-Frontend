@@ -35,25 +35,28 @@ class SongSearch extends Component {
 
   render() {
     const { data } = this.state;
+    console.log(data);
     const options =
       data != null
-        ? data.map(opt => (
-            <Option key={opt.map.title} value={opt.map.title}>
-              <Row>
-                <Col span={6}>
-                  <img
-                    width="50px"
-                    height="50px"
-                    src={opt.map.album.toString()}
-                  />
-                </Col>
-                <Col span={18}>
-                  <div>{opt.map.title}</div>
-                  <div>by {opt.map.artist}</div>
-                </Col>
-              </Row>
-            </Option>
-          ))
+        ? data.map((opt, key) => {
+            return (
+              <Option key={key} value={opt.map.url}>
+                <Row>
+                  <Col span={6}>
+                    <img
+                      width="50px"
+                      height="50px"
+                      src={opt.map.album.toString()}
+                    />
+                  </Col>
+                  <Col span={18}>
+                    <div>{opt.map.title}</div>
+                    <div>by {opt.map.artist}</div>
+                  </Col>
+                </Row>
+              </Option>
+            );
+          })
         : filler.map(opt => (
             <Option key={opt.id} value={opt.id}>
               <div>{opt.name}</div>

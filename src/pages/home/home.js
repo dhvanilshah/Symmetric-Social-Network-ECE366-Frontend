@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 
 import Postbox from "../../components/post/postInput";
 
-
 import FriendsList from "../../components/friendslist/friendslist";
 import Feed from "../../components/feed/feed";
 import Post from "../../components/postbox/postbox";
@@ -24,7 +23,7 @@ class Home extends Component {
       <Layout className="layout">
         <Header />
 
-        <Postbox />
+        {/* <Postbox /> */}
 
         <Content
           style={{
