@@ -20,11 +20,16 @@ class Complete extends Component {
     super(props);
     this.state = { data: null };
     this.updateData = this.updateData.bind(this);
+    this.addFriend = this.addFriend.bind(this);
+  }
+
+  async addFriend(id) {
+    const data = await API.get("addFriend/" + id.toString());
   }
 
   async updateData(value) {
     const data = await API.get("getUser/" + value.toString());
-    this.setState({ data: data.data });
+    this.setState({ data: data.data.payload.value });
   }
 
   render() {
@@ -38,12 +43,12 @@ class Complete extends Component {
                   <Button
                     icon="plus"
                     style={{ width: "100%", marginTop: "16px" }}
-                    // onClick={() => this.login(this.state.username, this.state.password, this.props.loginRequest)}
+                    onClick={() => this.addFriend(opt.id)}
                   />
                 </Col>
                 <Col span={18} pull={6}>
                   <h4>{opt.name}</h4>
-                  <p>{opt.id}</p>
+                  <p>{opt.username}</p>
                 </Col>
               </Row>
             </Option>

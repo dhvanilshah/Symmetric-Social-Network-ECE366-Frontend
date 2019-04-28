@@ -59,7 +59,6 @@ class Signup extends Component {
       });
 
     if (redirect) {
-      console.log("here");
       this.setState({ redirectToReferrer: true });
     }
   }

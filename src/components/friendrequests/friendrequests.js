@@ -3,43 +3,61 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProfileCircle from "../uielements/profileCircle";
 import Complete from "../searchbar/searchbar";
-
+import API from "../../api/api";
 const { Header } = Layout;
 
-const data = [
-  {
-    name: "Ant Design Title 1",
-    username: "Username1"
-  },
-  {
-    name: "Ant Design Title 2",
-    username: "Username2"
-  },
-  {
-    name: "Ant Design Title 3",
-    username: "Username3"
-  },
-  {
-    name: "Ant Design Title 4",
-    username: "Username4"
-  }
-];
-
-const content = (
-  <List
-    itemLayout="horizontal"
-    dataSource={data}
-    renderItem={item => (
-      <List.Item actions={[<Button>Accept</Button>, <a>Decline</a>]}>
-        <List.Item.Meta title={item.name} description={item.username} />
-      </List.Item>
-    )}
-  />
-);
-
 class FriendRequests extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: null };
+    this.getRequests = this.getRequests.bind(this);
+    this.handleRequest = this.handleRequest.bind(this);
+  }
+
+  async getRequests() {
+    const data = await API.get("getRequests");
+    this.setState({ data: data.data.payload.value });
+    console.log(data.data.payload.value);
+  }
+
+  async handleRequest(id, action) {
+    const data = await API.get(
+      "handleRequest/" + id.toString() + "/" + action.toString()
+    );
+    if (data.data.payload.value == "okay") {
+      console.log("hey");
+    }
+  }
+
+  componentWillMount() {
+    this.getRequests();
+  }
+
   render() {
     const { isLoggedIn } = this.props;
+    const { data } = this.state;
+
+    const content = (
+      <List
+        itemLayout="horizontal"
+        dataSource={data}
+        renderItem={item => (
+          <List.Item
+            actions={[
+              <Button onClick={() => this.handleRequest(item.id, "accept")}>
+                Accept
+              </Button>,
+              <a onClick={() => this.handleRequest(item.id, "decline")}>
+                Decline
+              </a>
+            ]}
+          >
+            <List.Item.Meta title={item.name} description={item.username} />
+          </List.Item>
+        )}
+      />
+    );
+
     return (
       <Popover
         placement="bottomRight"
