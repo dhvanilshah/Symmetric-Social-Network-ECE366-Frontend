@@ -13,10 +13,8 @@ class FriendList extends Component {
   }
 
   async getFriends() {
-    console.log("called");
     const data = await API.get("getFriends");
     this.setState({ data: data.data.payload.value });
-    console.log(data.data.payload.value);
   }
 
   componentWillMount() {

@@ -9,7 +9,7 @@ const { Header } = Layout;
 class FriendRequests extends Component {
   constructor(props) {
     super(props);
-    this.state = { data: null };
+    this.state = { data: [] };
     this.getRequests = this.getRequests.bind(this);
     this.handleRequest = this.handleRequest.bind(this);
   }
@@ -17,7 +17,6 @@ class FriendRequests extends Component {
   async getRequests() {
     const data = await API.get("getRequests");
     this.setState({ data: data.data.payload.value });
-    console.log(data.data.payload.value);
   }
 
   async handleRequest(id, action) {
@@ -25,7 +24,7 @@ class FriendRequests extends Component {
       "handleRequest/" + id.toString() + "/" + action.toString()
     );
     if (data.data.payload.value == "okay") {
-      console.log("hey");
+      // do something here
     }
   }
 

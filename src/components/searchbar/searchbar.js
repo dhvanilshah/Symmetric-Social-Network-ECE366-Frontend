@@ -28,6 +28,9 @@ class Complete extends Component {
   }
 
   async updateData(value) {
+    if (value == "") {
+      return;
+    }
     const data = await API.get("getUser/" + value.toString());
     this.setState({ data: data.data.payload.value });
   }

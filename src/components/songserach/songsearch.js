@@ -25,11 +25,32 @@ class SongSearch extends Component {
     this.selectSong = this.selectSong.bind(this);
   }
 
-  selectSong(opt) {
-    this.props.updateSong(opt.map);
+  async selectSong(opt) {
+    const data = await API.post("/song/add", {
+      title: opt.map.title,
+      songUrl: opt.map.url,
+      artist: opt.map.artist,
+      albumImageUrl: opt.map.album
+    })
+      .then(function(response) {
+        if (response.data.status == "OK") {
+          return response.data.payload.value;
+        }
+      })
+      .catch(function(error) {
+        alert(error);
+      });
+
+    if (data != null) {
+      const song = { ...opt.map, id: data };
+      this.props.updateSong(song);
+    }
   }
 
   async updateData(value) {
+    if (value == "") {
+      return;
+    }
     this.setState({ data: null });
     const data = await API.get("song/" + value.toString());
     if (data != null) {

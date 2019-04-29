@@ -2,7 +2,7 @@ import { SELECT_SONG, CLEAR_SONG } from "./actiontypes.js";
 
 const initState = {
   songSelected: false,
-  song: { album: null, artist: null, title: null, url: null }
+  song: { album: null, artist: null, title: null, url: null, id: null }
 };
 
 export default function authReducer(state = initState, action) {
