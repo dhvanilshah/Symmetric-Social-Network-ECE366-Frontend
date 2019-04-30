@@ -21,6 +21,7 @@ export function* loginRequest() {
 export function* loginSuccess() {
   yield takeEvery(LOGIN_SUCCESS, function*(payload) {
     yield window.localStorage.setItem("token", payload.idToken);
+    yield window.localStorage.setItem("username", payload.username);
   });
 }
 
@@ -32,6 +33,7 @@ export function* logout() {
   yield takeEvery(LOGOUT, function*() {
     console.log("removing-token");
     window.localStorage.removeItem("token");
+    window.localStorage.removeItem("username");
   });
 }
 
@@ -46,10 +48,12 @@ export function* registerUser() {
 export function* checkAuthorization() {
   yield takeEvery(CHECK_AUTHORIZATION, function*() {
     const token = yield window.localStorage.getItem("token");
+    const username = yield window.localStorage.getItem("username");
     if (token) {
       yield put({
         type: LOGIN_SUCCESS,
-        idToken: token
+        idToken: token,
+        username: username
       });
     }
   });
