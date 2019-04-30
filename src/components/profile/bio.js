@@ -8,12 +8,12 @@ class Bio extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fullName: "my name",
-      birthday: "1/1/1",
-      bio: "hello",
-      faveSong: "lemonade",
+      fullName: "",
+      birthday: "",
+      bio: "",
+      faveSong: "",
       isToggleOn: true,
-      username: "self"
+      username: ""
     };
     this.saveBio = this.saveBio.bind(this);
     this.getBio = this.getBio.bind(this);

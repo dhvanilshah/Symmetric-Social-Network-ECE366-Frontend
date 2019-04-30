@@ -1,10 +1,11 @@
-import { Layout, Popover, Button, Icon } from "antd";
+import { Layout, Popover, Button, Icon, Row } from "antd";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ProfileCircle from "../uielements/profileCircle";
 import "./header.css";
 import Complete from "../searchbar/searchbar";
 import FriendRequests from "../friendrequests/friendrequests";
+import ReturnHome from "../uielements/returnHome";
 
 const { Header } = Layout;
 
@@ -31,6 +32,7 @@ class HeaderBar extends Component {
         {isLoggedIn ? <Complete /> : null}
         {isLoggedIn ? (
           <div>
+            <ReturnHome />
             <FriendRequests />
             <ProfileCircle />
           </div>
