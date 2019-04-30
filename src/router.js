@@ -9,6 +9,7 @@ import { connect } from "react-redux";
 import Signin from "./pages/signin/signin";
 import Home from "./pages/home/home";
 import Signup from "./pages/signinup/signup";
+import Profile from "./pages/profile/profile";
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -33,6 +34,7 @@ const PublicRoutes = ({ isLoggedIn }) => {
       <Switch>
         <Route exact path={"/signin"} component={Signin} />
         <Route exact path={"/signup"} component={Signup} />
+        <Route exact path={"/profile"} component={Profile} />
         {/* <Route
           exact
           path={"/signin"}
@@ -43,11 +45,7 @@ const PublicRoutes = ({ isLoggedIn }) => {
           path={"/signup"}
           component={asyncComponent(() => import("./containers/Page/signup"))}
         /> */}
-        <RestrictedRoute
-          path="/"
-          component={Home}
-          isLoggedIn={isLoggedIn}
-        />
+        <RestrictedRoute path="/" component={Home} isLoggedIn={isLoggedIn} />
       </Switch>
     </Router>
   );

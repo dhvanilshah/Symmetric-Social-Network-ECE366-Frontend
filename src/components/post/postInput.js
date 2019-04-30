@@ -48,24 +48,11 @@ class postBox extends Component {
   render() {
     return (
       <div style={{ margin: "24px 0" }}>
-        <Input
-          placeholder="Enter who the message is to"
-          onChange={(event, newValue) =>
-            this.setState({ receiverId: event.target.value })
-          }
-        />
         <TextArea
-          placeholder="Enter your comment"
+          placeholder="Add a message"
           autosize={{ minRows: 2, maxRows: 6 }}
           onChange={(event, newValue) =>
             this.setState({ message: event.target.value })
-          }
-        />
-        <Input
-          placeholder="Song name"
-          autosize={{ minRows: 1, maxRows: 1 }}
-          onChange={(event, newValue) =>
-            this.setState({ song: event.target.value })
           }
         />
         <Button
