@@ -2,19 +2,14 @@ import { Menu, Dropdown, Icon } from "antd";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { logout } from "../../redux/auth/actions";
+import { NavLink } from "react-router-dom";
 
 class ProfileCircle extends Component {
   render() {
     const menu = (
       <Menu>
         <Menu.Item>
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="http://www.alipay.com/"
-          >
-            Settings
-          </a>
+          <NavLink to="/profile"> Profile </NavLink>
         </Menu.Item>
         <Menu.Item>
           <a
