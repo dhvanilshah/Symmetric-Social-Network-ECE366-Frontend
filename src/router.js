@@ -9,6 +9,8 @@ import { connect } from "react-redux";
 import Signin from "./pages/signin/signin";
 import Home from "./pages/home/home";
 import Signup from "./pages/signinup/signup";
+
+import Profile from "./pages/profile/profile";
 import { createBrowserHistory } from "history";
 
 export const history = createBrowserHistory();
@@ -36,6 +38,7 @@ const PublicRoutes = ({ isLoggedIn }) => {
       <Switch>
         <Route exact path={"/signin"} component={Signin} />
         <Route exact path={"/signup"} component={Signup} />
+        <Route exact path={"/profile"} component={Profile} />
         {/* <Route
           exact
           path={"/signin"}
