@@ -2,6 +2,8 @@ import { Icon, Input, AutoComplete, Col, Row } from "antd";
 import React, { Component } from "react";
 import Search from "antd/lib/transfer/search";
 import API from "../../api/api";
+import { updateSong } from "../../redux/song/actions";
+import { connect } from "react-redux";
 
 const Option = AutoComplete.Option;
 const OptGroup = AutoComplete.OptGroup;
@@ -20,9 +22,35 @@ class SongSearch extends Component {
     super(props);
     this.state = { data: null };
     this.updateData = this.updateData.bind(this);
+    this.selectSong = this.selectSong.bind(this);
+  }
+
+  async selectSong(opt) {
+    const data = await API.post("/song/add", {
+      title: opt.map.title,
+      songUrl: opt.map.url,
+      artist: opt.map.artist,
+      albumImageUrl: opt.map.album
+    })
+      .then(function(response) {
+        if (response.data.status == "OK") {
+          return response.data.payload.value;
+        }
+      })
+      .catch(function(error) {
+        alert(error);
+      });
+
+    if (data != null) {
+      const song = { ...opt.map, id: data };
+      this.props.updateSong(song);
+    }
   }
 
   async updateData(value) {
+    if (value == "") {
+      return;
+    }
     this.setState({ data: null });
     const data = await API.get("song/" + value.toString());
     if (data != null) {
@@ -37,23 +65,31 @@ class SongSearch extends Component {
     const { data } = this.state;
     const options =
       data != null
-        ? data.map(opt => (
-            <Option key={opt.map.title} value={opt.map.title}>
-              <Row>
-                <Col span={6}>
-                  <img
-                    width="50px"
-                    height="50px"
-                    src={opt.map.album.toString()}
-                  />
-                </Col>
-                <Col span={18}>
-                  <div>{opt.map.title}</div>
-                  <div>by {opt.map.artist}</div>
-                </Col>
-              </Row>
-            </Option>
-          ))
+        ? data.map((opt, key) => {
+            return (
+              <Option
+                key={key}
+                value={opt.map.url}
+                onClick={e => {
+                  this.selectSong(opt);
+                }}
+              >
+                <Row>
+                  <Col span={6}>
+                    <img
+                      width="50px"
+                      height="50px"
+                      src={opt.map.album.toString()}
+                    />
+                  </Col>
+                  <Col span={18}>
+                    <div>{opt.map.title}</div>
+                    <div>by {opt.map.artist}</div>
+                  </Col>
+                </Row>
+              </Option>
+            );
+          })
         : filler.map(opt => (
             <Option key={opt.id} value={opt.id}>
               <div>{opt.name}</div>
@@ -82,4 +118,15 @@ class SongSearch extends Component {
   }
 }
 
-export default SongSearch;
+const mapDispatchToProps = dispatch => {
+  return {
+    updateSong: song => dispatch(updateSong(song))
+  };
+};
+
+export default connect(
+  state => ({
+    isLoggedIn: state.Auth.idToken !== null
+  }),
+  mapDispatchToProps
+)(SongSearch);

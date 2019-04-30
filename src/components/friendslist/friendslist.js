@@ -1,51 +1,43 @@
-import { Layout, Popover, List, Avatar, Icon, Button, message } from "antd";
+import { List, Icon, Button } from "antd";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
-const data = [
-  {
-    title: "User1 Name"
-  },
-  {
-    title: "User2 Name"
-  },
-  {
-    title: "User3 Name"
-  },
-  {
-    title: "User4 Name"
-  },
-  {
-    title: "User1 Name"
-  },
-  {
-    title: "User2 Name"
-  },
-  {
-    title: "User3 Name"
-  },
-  {
-    title: "User4 Name"
-  },
-  {
-    title: "User1 Name"
-  },
-  {
-    title: "User2 Name"
-  },
-  {
-    title: "User3 Name"
-  },
-  {
-    title: "User4 Name"
-  }
-];
+import { unflagFriends } from "../../redux/updates/actions";
+import API from "../../api/api";
 
 class FriendList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { data: [], loading: false };
+    this.getFriends = this.getFriends.bind(this);
+  }
+
+  async getFriends() {
+    this.setState({ loading: true });
+    const data = await API.get("getFriends");
+    if (
+      data.data.status === "OK" &&
+      data.data.payload.value !== [] &&
+      data.data.payload.value !== null
+    ) {
+      this.setState({ data: data.data.payload.value });
+    }
+    this.setState({ loading: false });
+  }
+
+  componentDidMount() {
+    this.getFriends();
+  }
+
   render() {
-    const { isLoggedIn } = this.props;
+    const { data, loading } = this.state;
+    const { updateFriends } = this.props;
+    if (updateFriends) {
+      this.props.unflagFriends();
+      this.getFriends();
+    }
     return (
       <List
+        loading={loading}
         itemLayout="horizontal"
         header={<h1>Friends List</h1>}
         dataSource={data}
@@ -59,8 +51,8 @@ class FriendList extends Component {
             }
           >
             <List.Item.Meta
-              title={<a href="https://ant.design">{item.title}</a>}
-              description="username"
+              title={<a href="https://ant.design">{item.name}</a>}
+              description={item.username}
             />
           </List.Item>
         )}
@@ -69,6 +61,16 @@ class FriendList extends Component {
   }
 }
 
-export default connect(state => ({
-  isLoggedIn: state.Auth.idToken !== null
-}))(FriendList);
+const mapDispatchToProps = dispatch => {
+  return {
+    unflagFriends: () => dispatch(unflagFriends())
+  };
+};
+
+export default connect(
+  state => ({
+    isLoggedIn: state.Auth.idToken !== null,
+    updateFriends: state.Updates.updateFriends
+  }),
+  mapDispatchToProps
+)(FriendList);

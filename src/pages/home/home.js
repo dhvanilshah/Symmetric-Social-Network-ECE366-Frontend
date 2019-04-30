@@ -23,6 +23,9 @@ class Home extends Component {
     return (
       <Layout className="layout">
         <Header />
+
+        {/* <Postbox /> */}
+
         <Content
           style={{
             padding: "16px",
