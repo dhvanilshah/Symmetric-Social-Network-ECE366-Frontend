@@ -1,4 +1,4 @@
-import { Layout, Popover, List, Row, Col, Button, message } from "antd";
+import { List, Row, Col } from "antd";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
@@ -43,7 +43,6 @@ const data = [
 
 class Feed extends Component {
   render() {
-    const { isLoggedIn } = this.props;
     return (
       <List
         itemLayout="horizontal"
