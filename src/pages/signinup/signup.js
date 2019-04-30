@@ -17,7 +17,7 @@ class Signup extends Component {
     super(props);
     this.state = {
       redirectToReferrer: false,
-      registerSuccess: false,
+      goBack: false,
       fullName: "",
       email: "",
       username: "",
@@ -46,7 +46,7 @@ class Signup extends Component {
       username: username,
       birthday: birthday
     };
-    const redirect = fetch("http://localhost:9999/addUser", {
+    const redirect = fetch("http://localhost:8000/api/addUser", {
       method: "post",
       body: JSON.stringify(user)
     })
@@ -66,12 +66,12 @@ class Signup extends Component {
   render() {
     const { isLoggedIn } = this.props;
     const { redirectToReferrer } = this.state;
-    const { registerSuccess } = this.state;
+    const { goBack } = this.state;
     const token = 1;
     if (redirectToReferrer) {
       return <Redirect to={{ pathname: "/" }} />;
     }
-    if (registerSuccess) {
+    if (goBack) {
       return <Redirect to={{ pathname: "/" }} />;
     }
     return (
@@ -149,7 +149,7 @@ class Signup extends Component {
           >
             Sign Up
           </Button>
-          Or <a href="/">sign in.</a>
+          Or <a onClick={() => this.setState({ goBack: true })}>sign in.</a>
         </Content>
         <Footer />
       </Layout>

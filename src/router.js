@@ -3,12 +3,15 @@ import {
   Route,
   Redirect,
   Switch,
-  BrowserRouter as Router
+  HashRouter as Router
 } from "react-router-dom";
 import { connect } from "react-redux";
 import Signin from "./pages/signin/signin";
 import Home from "./pages/home/home";
 import Signup from "./pages/signinup/signup";
+import { createBrowserHistory } from "history";
+
+export const history = createBrowserHistory();
 
 const RestrictedRoute = ({ component: Component, isLoggedIn, ...rest }) => (
   <Route
@@ -43,11 +46,7 @@ const PublicRoutes = ({ isLoggedIn }) => {
           path={"/signup"}
           component={asyncComponent(() => import("./containers/Page/signup"))}
         /> */}
-        <RestrictedRoute
-          path="/"
-          component={Home}
-          isLoggedIn={isLoggedIn}
-        />
+        <RestrictedRoute path="/" component={Home} isLoggedIn={isLoggedIn} />
       </Switch>
     </Router>
   );
