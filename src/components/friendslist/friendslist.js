@@ -44,11 +44,11 @@ class FriendList extends Component {
         renderItem={item => (
           <List.Item
             onClick={() => console.log("Do Something Here")}
-            actions={
+            actions={[
               <Button>
                 <Icon type="message" theme="outlined" />
               </Button>
-            }
+            ]}
           >
             <List.Item.Meta
               title={<a href="https://ant.design">{item.name}</a>}
