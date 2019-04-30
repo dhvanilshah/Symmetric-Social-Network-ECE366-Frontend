@@ -1,5 +1,6 @@
-import { Icon, Input, AutoComplete, Button } from "antd";
+import { Icon, Input, AutoComplete, Button, Row, Col } from "antd";
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import Search from "antd/lib/transfer/search";
 import API from "../../api/api";
 
@@ -8,7 +9,7 @@ const OptGroup = AutoComplete.OptGroup;
 
 const filler = [
   {
-    id: "null",
+    id: "something random",
     name: "Search For Users Here"
   }
 ];
@@ -20,11 +21,19 @@ class Complete extends Component {
     super(props);
     this.state = { data: null };
     this.updateData = this.updateData.bind(this);
+    this.addFriend = this.addFriend.bind(this);
+  }
+
+  async addFriend(id) {
+    const data = await API.get("addFriend/" + id.toString());
   }
 
   async updateData(value) {
+    if (value == "") {
+      return;
+    }
     const data = await API.get("getUser/" + value.toString());
-    this.setState({ data: data.data });
+    this.setState({ data: data.data.payload.value });
   }
 
   render() {
@@ -32,38 +41,40 @@ class Complete extends Component {
     const options =
       data != null
         ? data.map(opt => (
-          <Option key={opt.id} value={opt.id}>
-            <div>
-              {opt.name}
-              <Button stlye={{ float: "right" }}>
-                <Icon type="plus" />
-              </Button>
-            </div>
-          </Option>
-        ))
+            <Option key={opt.id} value={opt.id}>
+              <NavLink to={"/profile/" + opt.username}>
+                <Row>
+                  <Col span={6} push={18}>
+                    <Button
+                      icon="plus"
+                      style={{ width: "100%", marginTop: "16px" }}
+                      onClick={() => this.addFriend(opt.id)}
+                    />
+                  </Col>
+                  <Col span={18} pull={6}>
+                    <h4>{opt.name}</h4>
+                    <p>{opt.username}</p>
+                  </Col>
+                </Row>
+              </NavLink>
+            </Option>
+          ))
         : filler.map(opt => (
-          <Option key={opt.id} value={opt.id}>
-            <div>
+            <Option key={opt.id} value={opt.id}>
               {opt.name}
-              <Button stlye={{ float: "right" }}
-              // onClick={() => this.login(this.state.username, this.state.password, this.props.loginRequest)}
-              >
-                <Icon type="plus" />
-              </Button>
-            </div>
-          </Option>
-        ));
+            </Option>
+          ));
     return (
       <div className="certain-category-search-wrapper" style={{ width: 250 }}>
         <AutoComplete
           className="certain-category-search"
           dropdownClassName="certain-category-search-dropdown"
           dropdownMatchSelectWidth={false}
-          dropdownStyle={{ width: 300 }}
+          dropdownStyle={{ width: 250 }}
           size="large"
-          style={{ width: "100%" }}
+          style={{ width: "200px" }}
           dataSource={options}
-          placeholder="input here"
+          placeholder="Search for a User"
           optionLabelProp="value"
           onChange={value => this.updateData(value)}
         >

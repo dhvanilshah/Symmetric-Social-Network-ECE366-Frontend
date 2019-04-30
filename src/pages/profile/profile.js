@@ -1,31 +1,26 @@
-import { Layout, Row, Col } from "antd";
 import React, { Component } from "react";
-import "antd/dist/antd.css";
 import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
+import { Layout, Row, Col } from "antd";
 import { connect } from "react-redux";
-
-// import Postbox from "../../components/post/postInput";
-
 import FriendsList from "../../components/friendslist/friendslist";
 import Feed from "../../components/feed/feed";
 import Post from "../../components/postbox/postbox";
-import Songsearch from "../../components/songserach/songsearch";
+import Bio from "../../components/profile/bio";
 const { Content } = Layout;
 
-class Home extends Component {
+class Profile extends Component {
   constructor(props) {
     super(props);
     this.state = { redirectToReferrer: true };
   }
 
   render() {
+    const username = this.props.match.params.username;
+
     return (
       <Layout className="layout">
         <Header />
-
-        {/* <Postbox /> */}
-
         <Content
           style={{
             padding: "16px",
@@ -33,27 +28,35 @@ class Home extends Component {
             height: window.innerHeight * 0.8
           }}
         >
-          {/* <FriendsList /> */}
           <Row gutter={16}>
-            <Col span={17}>
-              <div
-                style={{
-                  height: window.innerHeight * 0.79,
-                  overflowY: "scroll"
-                }}
-              >
+            <Col
+              span={17}
+              style={{
+                overflowY: "scroll",
+                height: window.innerHeight * 0.79
+              }}
+            >
+              <div>
                 <Row
                   style={{
-                    background: "white",
-                    marginBottom: "16px"
+                    marginBottom: "16px",
+                    background: "white"
+                  }}
+                >
+                  <Bio user={username} />
+                </Row>
+                <Row
+                  style={{
+                    marginBottom: "16px",
+                    background: "white"
                   }}
                 >
                   <Post />
                 </Row>
                 <Row
                   style={{
-                    background: "white",
-                    padding: "16px"
+                    marginBottom: "16px",
+                    background: "white"
                   }}
                 >
                   <Feed />
@@ -87,4 +90,4 @@ class Home extends Component {
 
 export default connect(state => ({
   isLoggedIn: state.Auth.idToken !== null
-}))(Home);
+}))(Profile);

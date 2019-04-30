@@ -17,12 +17,12 @@ class Signup extends Component {
     super(props);
     this.state = {
       redirectToReferrer: false,
-      registerSuccess: false,
+      goBack: false,
       fullName: "",
       email: "",
       username: "",
       password: "",
-      service: ""
+      birthday: ""
     };
     this.register = this.register.bind(this);
   }
@@ -36,7 +36,7 @@ class Signup extends Component {
     }
   }
 
-  register(fullName, email, username, password, service, registerUser) {
+  register(fullName, email, username, password, birthday, registerUser) {
     let verify = false;
 
     const user = {
@@ -44,14 +44,14 @@ class Signup extends Component {
       email: email,
       password: password,
       username: username,
-      service: service
+      birthday: birthday
     };
-    const redirect = fetch("http://localhost:9999/addUser", {
+    const redirect = fetch("http://localhost:8000/api/addUser", {
       method: "post",
       body: JSON.stringify(user)
     })
       .then(function(response) {
-        console.log("succss", response);
+        console.log("success", response);
         return true;
       })
       .catch(function(error) {
@@ -59,7 +59,6 @@ class Signup extends Component {
       });
 
     if (redirect) {
-      console.log("here");
       this.setState({ redirectToReferrer: true });
     }
   }
@@ -67,12 +66,12 @@ class Signup extends Component {
   render() {
     const { isLoggedIn } = this.props;
     const { redirectToReferrer } = this.state;
-    const { registerSuccess } = this.state;
+    const { goBack } = this.state;
     const token = 1;
     if (redirectToReferrer) {
       return <Redirect to={{ pathname: "/" }} />;
     }
-    if (registerSuccess) {
+    if (goBack) {
       return <Redirect to={{ pathname: "/" }} />;
     }
     return (
@@ -126,11 +125,11 @@ class Signup extends Component {
             }
           />
           <Input
-            type="service"
-            placeholder="music streaming service"
+            type="birthday"
+            placeholder="birthday"
             style={{ margin: "24px 0px" }}
             onChange={(event, newValue) =>
-              this.setState({ service: event.target.value })
+              this.setState({ birthday: event.target.value })
             }
           />
           <Button
@@ -143,14 +142,14 @@ class Signup extends Component {
                 this.state.email,
                 this.state.username,
                 this.state.password,
-                this.state.service,
+                this.state.birthday,
                 this.props.registerUser
               )
             }
           >
             Sign Up
           </Button>
-          Or <a href="/">sign in.</a>
+          Or <a onClick={() => this.setState({ goBack: true })}>sign in.</a>
         </Content>
         <Footer />
       </Layout>
