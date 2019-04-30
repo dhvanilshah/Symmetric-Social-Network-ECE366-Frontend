@@ -16,6 +16,8 @@ class Profile extends Component {
   }
 
   render() {
+    const username = this.props.match.params.username;
+
     return (
       <Layout className="layout">
         <Header />
@@ -37,13 +39,28 @@ class Profile extends Component {
               <div>
                 <Row
                   style={{
-                    marginBottom: "16px"
+                    marginBottom: "16px",
+                    background: "white"
                   }}
                 >
-                  <Bio />
+                  <Bio user={username} />
                 </Row>
-                <Post />
-                <Feed />
+                <Row
+                  style={{
+                    marginBottom: "16px",
+                    background: "white"
+                  }}
+                >
+                  <Post />
+                </Row>
+                <Row
+                  style={{
+                    marginBottom: "16px",
+                    background: "white"
+                  }}
+                >
+                  <Feed />
+                </Row>
               </div>
             </Col>
             <Col

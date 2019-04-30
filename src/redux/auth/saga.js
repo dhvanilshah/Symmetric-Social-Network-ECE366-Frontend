@@ -12,7 +12,8 @@ export function* loginRequest() {
   yield takeEvery("LOGIN_REQUEST", function*(payload) {
     yield put({
       type: LOGIN_SUCCESS,
-      idToken: payload.token
+      idToken: payload.token,
+      username: payload.username
     });
   });
 }

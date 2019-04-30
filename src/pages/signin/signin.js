@@ -28,7 +28,7 @@ class Signin extends Component {
       .then(function(response) {
         console.log(response);
         if (response.data.status === "OK") {
-          loginRequest(response.data.payload.value);
+          loginRequest(response.data.payload.value, username);
         }
       })
       .catch(function(error) {
@@ -125,7 +125,7 @@ class Signin extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    loginRequest: token => dispatch(loginRequest(token))
+    loginRequest: (token, username) => dispatch(loginRequest(token, username))
   };
 };
 

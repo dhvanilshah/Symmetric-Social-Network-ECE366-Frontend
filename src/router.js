@@ -38,17 +38,12 @@ const PublicRoutes = ({ isLoggedIn }) => {
       <Switch>
         <Route exact path={"/signin"} component={Signin} />
         <Route exact path={"/signup"} component={Signup} />
-        <Route exact path={"/profile"} component={Profile} />
-        {/* <Route
+        <RestrictedRoute
           exact
-          path={"/signin"}
-          component={asyncComponent(() => import("./containers/Page/signin"))}
+          path={"/profile/:username"}
+          component={Profile}
+          isLoggedIn={isLoggedIn}
         />
-        <Route
-          exact
-          path={"/signup"}
-          component={asyncComponent(() => import("./containers/Page/signup"))}
-        /> */}
         <RestrictedRoute path="/" component={Home} isLoggedIn={isLoggedIn} />
       </Switch>
     </Router>

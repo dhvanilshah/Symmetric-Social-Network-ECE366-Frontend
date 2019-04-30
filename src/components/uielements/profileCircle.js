@@ -6,10 +6,12 @@ import { NavLink } from "react-router-dom";
 
 class ProfileCircle extends Component {
   render() {
+    const { username } = this.props;
+    const profileString = "/profile/" + username;
     const menu = (
       <Menu>
         <Menu.Item>
-          <NavLink to="/profile"> Profile </NavLink>
+          <NavLink to={profileString}> Profile </NavLink>
         </Menu.Item>
         <Menu.Item>
           <a
@@ -41,7 +43,8 @@ class ProfileCircle extends Component {
 
 export default connect(
   state => ({
-    isLoggedIn: state.Auth.idToken !== null
+    isLoggedIn: state.Auth.idToken !== null,
+    username: state.Auth.username
   }),
   { logout }
 )(ProfileCircle);

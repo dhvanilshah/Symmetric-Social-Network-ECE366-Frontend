@@ -5,7 +5,7 @@ import Header from "../../components/header/header";
 import Footer from "../../components/footer/footer";
 import { connect } from "react-redux";
 
-import Postbox from "../../components/post/postInput";
+// import Postbox from "../../components/post/postInput";
 
 import FriendsList from "../../components/friendslist/friendslist";
 import Feed from "../../components/feed/feed";
@@ -48,8 +48,7 @@ class Home extends Component {
                     marginBottom: "16px"
                   }}
                 >
-                  <Songsearch />
-                  <Postbox />
+                  <Post />
                 </Row>
                 <Row
                   style={{

@@ -1,5 +1,6 @@
 import { Icon, Input, AutoComplete, Button, Row, Col } from "antd";
 import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
 import Search from "antd/lib/transfer/search";
 import API from "../../api/api";
 
@@ -41,19 +42,21 @@ class Complete extends Component {
       data != null
         ? data.map(opt => (
             <Option key={opt.id} value={opt.id}>
-              <Row>
-                <Col span={6} push={18}>
-                  <Button
-                    icon="plus"
-                    style={{ width: "100%", marginTop: "16px" }}
-                    onClick={() => this.addFriend(opt.id)}
-                  />
-                </Col>
-                <Col span={18} pull={6}>
-                  <h4>{opt.name}</h4>
-                  <p>{opt.username}</p>
-                </Col>
-              </Row>
+              <NavLink to={"/profile/" + opt.username}>
+                <Row>
+                  <Col span={6} push={18}>
+                    <Button
+                      icon="plus"
+                      style={{ width: "100%", marginTop: "16px" }}
+                      onClick={() => this.addFriend(opt.id)}
+                    />
+                  </Col>
+                  <Col span={18} pull={6}>
+                    <h4>{opt.name}</h4>
+                    <p>{opt.username}</p>
+                  </Col>
+                </Row>
+              </NavLink>
             </Option>
           ))
         : filler.map(opt => (

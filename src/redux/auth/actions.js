@@ -6,41 +6,43 @@ import {
   LOGIN_ERROR,
   REGISTER_USER,
   REGISTER_SUCCESS
-} from './actiontypes.js'
+} from "./actiontypes.js";
 
-export function checkAuthorization (token) {
+export function checkAuthorization(token) {
   return {
     type: CHECK_AUTHORIZATION,
     token
-  }
+  };
 }
 
-export function loginRequest (token) {
+export function loginRequest(token, username) {
   return {
     type: LOGIN_REQUEST,
-    token
-  }
+    token,
+    username
+  };
 }
 
-export function logout (receipt) {
+export function logout(receipt) {
   return {
     type: LOGOUT,
     receipt
-  }
+  };
 }
 
-export function registerUser (receipt) {
+export function registerUser(receipt) {
   return {
     type: REGISTER_USER,
     receipt
-  }
+  };
 }
 
-export function loginSuccess (token) {
+export function loginSuccess(token, username) {
   return {
     type: LOGIN_SUCCESS,
-    token
-  }
+    token,
+    username
+  };
 }
 
 // const actions = {

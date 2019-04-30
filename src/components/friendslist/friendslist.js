@@ -1,6 +1,7 @@
 import { List, Icon, Button } from "antd";
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { unflagFriends } from "../../redux/updates/actions";
 import API from "../../api/api";
 
@@ -43,7 +44,6 @@ class FriendList extends Component {
         dataSource={data}
         renderItem={item => (
           <List.Item
-            onClick={() => console.log("Do Something Here")}
             actions={[
               <Button>
                 <Icon type="message" theme="outlined" />
@@ -51,7 +51,9 @@ class FriendList extends Component {
             ]}
           >
             <List.Item.Meta
-              title={<a href="https://ant.design">{item.name}</a>}
+              title={
+                <NavLink to={"/profile/" + item.username}>{item.name}</NavLink>
+              }
               description={item.username}
             />
           </List.Item>
