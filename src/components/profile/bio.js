@@ -26,6 +26,10 @@ class Bio extends Component {
       }
     })
       .then(function(response) {
+        this.state.fullName = "fill";
+        this.state.bio = "fill";
+        this.birthday = "fill";
+        this.faveSong = "fill";
         console.log(response);
       })
       .catch(function(error) {
