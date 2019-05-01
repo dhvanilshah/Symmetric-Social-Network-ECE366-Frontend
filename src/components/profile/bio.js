@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Card, Input, Button } from "antd";
+import { Card, Input, Button, Row } from "antd";
 import API from "../../api/api";
 const { TextArea } = Input;
 
@@ -8,16 +8,18 @@ class Bio extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fullName: "my name",
-      birthday: "1/1/1",
-      bio: "hello",
-      faveSong: "lemonade",
+      fullName: "",
+      birthday: "",
+      bio: "",
+      faveSong: "",
       isToggleOn: true,
-      username: "self"
+      username: "",
+      id: ""
     };
     this.saveBio = this.saveBio.bind(this);
     this.getBio = this.getBio.bind(this);
     this.editBio = this.editBio.bind(this);
+    this.addFriend = this.addFriend.bind(this);
   }
 
   async getBio(username) {
@@ -34,9 +36,14 @@ class Bio extends Component {
         birthday: data.birthday ? data.birthday : "No Birthday Data",
         bio: data.bio ? data.bio : "No Bio",
         faveSong: data.faveSong ? data.faveSong : "No Favorite Song Added",
-        fullName: data.name
+        fullName: data.name,
+        id: data.id
       });
     }
+  }
+
+  async addFriend(id) {
+    const data = await API.get("addFriend/" + id.toString());
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -87,33 +94,69 @@ class Bio extends Component {
       button = activeUser ? (
         <Button
           className="edit-button"
-          style={{ float: "right", marginTop: "8px", marginBottom: "8px" }}
+          style={{
+            float: "right",
+            marginTop: "8px",
+            marginBottom: "8px",
+            marginRight: "8px"
+          }}
           onClick={this.editBio}
         >
-          {"edit"}
+          {"Edit"}
         </Button>
-      ) : null;
+      ) : (
+        <Button
+          style={{
+            float: "left",
+            marginLeft: "8px",
+            marginRight: "8px",
+            marginTop: "8px"
+          }}
+          onClick={() => this.addFriend(this.state.id)}
+        >
+          {"Add Friend"}
+        </Button>
+      );
       card = (
-        <Card title={this.state.fullName}>
-          Bio: {this.state.bio}
-          <br />
-          Birthday: {this.state.birthday}
-          <br />
-          Favorite Song: {this.state.faveSong}
-        </Card>
+        <div
+          style={{
+            paddingLeft: "8px",
+            paddingRight: "8px",
+            paddingTop: "16px"
+          }}
+        >
+          <Card title={this.state.fullName}>
+            Bio: {this.state.bio}
+            <br />
+            Birthday: {this.state.birthday}
+            <br />
+            Favorite Song: {this.state.faveSong}
+          </Card>
+        </div>
       );
     } else {
       button = (
         <Button
           className="save-bio-button"
-          style={{ float: "right", marginTop: "8px", marginBottom: "8px" }}
+          style={{
+            float: "right",
+            marginTop: "8px",
+            marginBottom: "8px",
+            marginRight: "8px"
+          }}
           onClick={this.saveBio}
         >
-          {"save"}
+          {"Save"}
         </Button>
       );
       card = (
-        <div>
+        <div
+          style={{
+            paddingLeft: "8px",
+            paddingRight: "8px",
+            paddingTop: "8px"
+          }}
+        >
           <TextArea
             placeholder="Bio"
             autosize={{ minRows: 2, maxRows: 6 }}
