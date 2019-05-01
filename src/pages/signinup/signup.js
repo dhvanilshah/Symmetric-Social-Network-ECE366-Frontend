@@ -22,7 +22,9 @@ class Signup extends Component {
       email: "",
       username: "",
       password: "",
-      birthday: ""
+      birthday: "",
+      errorVisible: false,
+      error: ""
     };
     this.register = this.register.bind(this);
   }
@@ -36,36 +38,33 @@ class Signup extends Component {
     }
   }
 
-  register(fullName, email, username, password, birthday, registerUser) {
-    let verify = false;
-
-    const user = {
+  async register(fullName, email, username, password, birthday, registerUser) {
+    this.setState({ errorVisible: false });
+    const data = await API.post("/addUser", {
       name: fullName,
       email: email,
       password: password,
       username: username,
       birthday: birthday
-    };
-    const redirect = fetch("http://localhost:8000/api/addUser", {
-      method: "post",
-      body: JSON.stringify(user)
     })
       .then(function(response) {
-        console.log("success", response);
-        return true;
+        return response.data;
       })
       .catch(function(error) {
-        console.log("error", error);
+        alert(error);
       });
-
-    if (redirect) {
-      this.setState({ redirectToReferrer: true });
+    if (data != null) {
+      if (data.status == "UNAUTHORIZED") {
+        this.setState({ errorVisible: true, error: data.payload.value });
+      } else {
+        this.setState({ redirectToReferrer: true });
+      }
     }
   }
 
   render() {
     const { isLoggedIn } = this.props;
-    const { redirectToReferrer } = this.state;
+    const { redirectToReferrer, errorVisible, error } = this.state;
     const { goBack } = this.state;
     const token = 1;
     if (redirectToReferrer) {
@@ -132,6 +131,7 @@ class Signup extends Component {
               this.setState({ birthday: event.target.value })
             }
           />
+          {errorVisible ? <p>{error}</p> : null}
           <Button
             type="primary"
             className="login-form-button"

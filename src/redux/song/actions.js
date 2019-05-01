@@ -1,4 +1,4 @@
-import { SELECT_SONG, CLEAR_SONG } from "./actiontypes.js";
+import { SELECT_SONG, CLEAR_SONG, UPDATE_FEED } from "./actiontypes.js";
 
 export function updateSong(song) {
   return {
@@ -9,5 +9,12 @@ export function updateSong(song) {
 export function clearSong(song) {
   return {
     type: CLEAR_SONG
+  };
+}
+
+export function updateFeed(bool) {
+  return {
+    type: UPDATE_FEED,
+    bool
   };
 }

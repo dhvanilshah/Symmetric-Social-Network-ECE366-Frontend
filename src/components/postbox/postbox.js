@@ -2,7 +2,8 @@ import { Input, Row, Col, Button } from "antd";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import SongSearch from "../songserach/songsearch";
-import { clearSong } from "../../redux/song/actions";
+import { clearSong, updateFeed } from "../../redux/song/actions";
+import API from "../../api/api";
 
 const { TextArea } = Input;
 
@@ -10,8 +11,37 @@ class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      posted: false
+      posted: false,
+      receiverUsername: "",
+      message: ""
     };
+  }
+
+  async addPost() {
+    const data = await API.post("/addPost", {
+      receiverUsername: this.state.receiverUsername,
+      songIdString: this.props.selectedSong.id,
+      privacy: 0,
+      likes: 0,
+      message: this.state.message
+    })
+      .then(function(response) {
+        return response.data;
+      })
+      .catch(function(error) {
+        alert(error);
+      });
+    if (data === 200) {
+      this.props.clearSong();
+      this.setState({ message: "" });
+      this.props.updateFeed(true);
+    }
+  }
+
+  componentDidMount() {
+    const username = this.props.username;
+
+    this.setState({ receiverUsername: username });
   }
 
   render() {
@@ -28,11 +58,18 @@ class Post extends Component {
             paddingTop: "8px"
           }}
         >
-          <TextArea placeholder="Add a Message" rows={5} />
+          <TextArea
+            placeholder="Add a Message"
+            rows={5}
+            value={this.state.message}
+            onChange={e => {
+              this.setState({ message: e.target.value });
+            }}
+          />
           <Button
             style={{ float: "right", marginTop: "8px", marginBottom: "8px" }}
             onClick={() => {
-              this.setState({ posted: !posted });
+              this.addPost();
             }}
           >
             Post
@@ -101,7 +138,8 @@ class Post extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    clearSong: song => dispatch(clearSong())
+    clearSong: song => dispatch(clearSong()),
+    updateFeed: bool => dispatch(updateFeed(bool))
   };
 };
 
