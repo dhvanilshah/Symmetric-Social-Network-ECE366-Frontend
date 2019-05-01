@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import API from "../../api/api";
 import { NavLink } from "react-router-dom";
-import _ from "lodash";
+import { updateFeed } from "../../redux/song/actions";
 
 class Feed extends Component {
   constructor(props) {
@@ -13,10 +13,11 @@ class Feed extends Component {
       loading: false
     };
     this.getMyFeed = this.getMyFeed.bind(this);
+    this.refreshFeed = this.refreshFeed.bind(this);
   }
 
   async getMyFeed() {
-    this.setState({ loading: true });
+    this.setState({ loading: true, data: [] });
     const data = await API.get("/getMyFeed")
       .then(function(response) {
         if (response.status === 200) {
@@ -26,20 +27,20 @@ class Feed extends Component {
       .catch(function(error) {
         alert(error);
       });
-    console.log("gmf", data);
-    const sortedData = _.sortBy(data, "dateCreated");
-
-    data.sort(function(a, b) {
-      a = new Date(a.map.dateCreated);
-      b = new Date(b.map.dateCreated);
-      return a > b ? -1 : a < b ? 1 : 0;
-    });
-    console.log("sorted", data);
-    this.setState({ data, loading: false });
+    if (data != null) {
+      data.sort(function(a, b) {
+        a = new Date(a.map.dateCreated);
+        b = new Date(b.map.dateCreated);
+        return a > b ? -1 : a < b ? 1 : 0;
+      });
+      this.setState({ data });
+    }
+    this.setState({ loading: false });
   }
 
-  async getPublicFeed() {
-    const data = await API.get("/getPublicFeed")
+  async getPublicFeed(username) {
+    this.setState({ loading: true, data: [] });
+    const data = await API.get("/getPublicFeed/" + username)
       .then(function(response) {
         if (response.status === 200) {
           return response.data;
@@ -48,21 +49,50 @@ class Feed extends Component {
       .catch(function(error) {
         alert(error);
       });
-    this.setState({ data });
+
+    if (data != null) {
+      data.sort(function(a, b) {
+        a = new Date(a.map.dateCreated);
+        b = new Date(b.map.dateCreated);
+        return a > b ? -1 : a < b ? 1 : 0;
+      });
+      this.setState({ data });
+    }
+    this.setState({ loading: false });
   }
 
-  componentDidMount() {
+  componentDidUpdate(prevProps, prevState) {
+    if (
+      this.props.location === "profile" &&
+      prevProps.user !== this.props.user
+    ) {
+      const username = this.props.user;
+      this.getPublicFeed(username);
+    }
+  }
+
+  refreshFeed() {
     const location = this.props.location;
-    var username = "";
     if (location === "profile") {
-      username = this.props.user;
-      this.getPublicFeed();
+      const username = this.props.user;
+      this.getPublicFeed(username);
     } else {
       this.getMyFeed();
     }
   }
+
+  componentDidMount() {
+    this.refreshFeed();
+  }
   render() {
     const { data, loading } = this.state;
+    const { feedRefresh } = this.props;
+
+    if (feedRefresh) {
+      this.refreshFeed();
+      this.props.updateFeed(false);
+    }
+
     return (
       <List
         loading={loading}
@@ -73,29 +103,36 @@ class Feed extends Component {
             <div style={{ width: "100%" }}>
               <Row gutter={16}>
                 <Col span={18} push={6}>
-                  <p>
+                  <p style={{ fontSize: 18 }}>
                     <NavLink
                       to={{
                         pathname: "/profile/" + item.map.writerUsername,
                         aboutProps: { friendCheck: true }
                       }}
                     >
-                      <a>{item.map.writerName}</a>
-                    </NavLink>{" "}
-                    to{" "}
-                    <NavLink
-                      to={{
-                        pathname: "/profile/" + item.map.receiverUsername,
-                        aboutProps: { friendCheck: true }
-                      }}
-                    >
-                      <a>{item.map.receiverName}</a>
+                      {item.map.writerName}
                     </NavLink>
+                    {item.map.writerId === item.map.receiverId ? null : " to "}
+                    {item.map.writerId === item.map.receiverId ? null : (
+                      <NavLink
+                        to={{
+                          pathname: "/profile/" + item.map.receiverUsername,
+                          aboutProps: { friendCheck: true }
+                        }}
+                      >
+                        {item.map.receiverName}
+                      </NavLink>
+                    )}
                     <br />
-                    {new Date(item.map.dateCreated).toDateString()}
+                    <span style={{ fontSize: 12, marginTop: 0 }}>
+                      {new Date(item.map.dateCreated).toDateString()}{" "}
+                      {new Date(item.map.dateCreated).toLocaleTimeString(
+                        "en-US"
+                      )}
+                    </span>
                   </p>
                   <p>
-                    <bold>{item.map.title}</bold> by {item.map.artist}
+                    {item.map.title} by {item.map.artist}
                   </p>
                   <p>{item.map.message}</p>
                 </Col>
@@ -116,6 +153,16 @@ class Feed extends Component {
   }
 }
 
-export default connect(state => ({
-  isLoggedIn: state.Auth.idToken !== null
-}))(Feed);
+const mapDispatchToProps = dispatch => {
+  return {
+    updateFeed: bool => dispatch(updateFeed(bool))
+  };
+};
+
+export default connect(
+  state => ({
+    isLoggedIn: state.Auth.idToken !== null,
+    feedRefresh: state.Song.updateFeed
+  }),
+  mapDispatchToProps
+)(Feed);

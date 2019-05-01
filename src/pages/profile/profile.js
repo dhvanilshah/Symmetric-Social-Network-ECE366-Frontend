@@ -19,8 +19,6 @@ class Profile extends Component {
     const username = this.props.match.params.username;
     const { friendCheck } = this.props.location.aboutProps;
 
-    console.log("friendcheck", friendCheck);
-
     return (
       <Layout className="layout">
         <Header />
@@ -55,7 +53,7 @@ class Profile extends Component {
                       background: "white"
                     }}
                   >
-                    <Post />
+                    <Post location={"profile"} username={username} />
                   </Row>
                 ) : null}
                 {friendCheck ? (

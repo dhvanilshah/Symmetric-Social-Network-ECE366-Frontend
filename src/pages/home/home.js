@@ -20,6 +20,7 @@ class Home extends Component {
   }
 
   render() {
+    const { username } = this.props;
     return (
       <Layout className="layout">
         <Header />
@@ -48,7 +49,7 @@ class Home extends Component {
                     marginBottom: "16px"
                   }}
                 >
-                  <Post />
+                  <Post location={"home"} username={username} />
                 </Row>
                 <Row
                   style={{
@@ -86,5 +87,6 @@ class Home extends Component {
 }
 
 export default connect(state => ({
-  isLoggedIn: state.Auth.idToken !== null
+  isLoggedIn: state.Auth.idToken !== null,
+  username: state.Auth.username
 }))(Home);

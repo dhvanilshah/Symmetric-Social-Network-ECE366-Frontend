@@ -5,7 +5,7 @@ const token = async () => {
 };
 
 export default axios.create({
-  baseURL: `http://localhost:8080`,
-  // baseURL: `http://192.168.1.90:9999`,
+  // baseURL: `http://localhost:8080`,
+  baseURL: `http://192.168.1.90:8080`,
   headers: { "session-token": localStorage.getItem("token") }
 });

@@ -1,5 +1,6 @@
 export const SELECT_SONG = "SELECT_SONG";
 export const CLEAR_SONG = "CLEAR_SONG";
+export const UPDATE_FEED = "UPDATE_FEED";
 // JWT, OATH
 // can encrypt in the browser or in the backend
 // when use logs in, return token with some expiriation
