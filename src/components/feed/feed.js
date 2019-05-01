@@ -1,4 +1,4 @@
-import { List, Row, Col } from "antd";
+import { List, Row, Col, Button, Drawer } from "antd";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import API from "../../api/api";
@@ -10,11 +10,40 @@ class Feed extends Component {
     super(props);
     this.state = {
       data: [],
-      loading: false
+      loading: false,
+      visible: false,
+      recData: [],
+      buttonLoading: false
     };
     this.getMyFeed = this.getMyFeed.bind(this);
     this.refreshFeed = this.refreshFeed.bind(this);
   }
+
+  showDrawer = async song => {
+    this.setState({ recData: [], buttonLoading: true });
+    const data = await API.get("/song/recommend/" + song)
+      .then(function(response) {
+        if (response.status === 200) {
+          return response.data;
+        }
+      })
+      .catch(function(error) {
+        alert(error);
+      });
+
+    if (data != null) {
+      console.log(data.slice(0, 5));
+      this.setState({ recData: data.slice(0, 5), visible: true });
+    }
+
+    this.setState({ buttonLoading: false });
+  };
+
+  onClose = () => {
+    this.setState({
+      visible: false
+    });
+  };
 
   async getMyFeed() {
     this.setState({ loading: true, data: [] });
@@ -135,6 +164,47 @@ class Feed extends Component {
                     {item.map.title} by {item.map.artist}
                   </p>
                   <p>{item.map.message}</p>
+                  <Button
+                    onClick={() => this.showDrawer(item.map.title)}
+                    loading={this.state.buttonLoading}
+                  >
+                    Get Recomendations
+                  </Button>
+                  <Drawer
+                    title="Recomendations"
+                    placement="right"
+                    closable={false}
+                    onClose={this.onClose}
+                    visible={this.state.visible}
+                  >
+                    {this.state.recData.map(song => {
+                      const selectedSong = song.map;
+                      return (
+                        <Row
+                          style={{
+                            marginTop: "8px",
+                            marginLeft: "8px",
+                            marginRight: "16px"
+                          }}
+                        >
+                          <Col span={14}>
+                            <img
+                              onClick={() =>
+                                window.open(selectedSong.url, "_blank")
+                              }
+                              width="150px"
+                              height="150px"
+                              src={selectedSong.album}
+                            />
+                            <div height="100px">
+                              <p>{selectedSong.title}</p>
+                              <p>by {selectedSong.artist}</p>
+                            </div>
+                          </Col>
+                        </Row>
+                      );
+                    })}
+                  </Drawer>
                 </Col>
                 <Col span={6} pull={18}>
                   <img
