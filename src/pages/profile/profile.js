@@ -7,17 +7,48 @@ import FriendsList from "../../components/friendslist/friendslist";
 import Feed from "../../components/feed/feed";
 import Post from "../../components/postbox/postbox";
 import Bio from "../../components/profile/bio";
+import API from "../../api/api";
 const { Content } = Layout;
 
 class Profile extends Component {
   constructor(props) {
     super(props);
-    this.state = { redirectToReferrer: true };
+    this.state = { redirectToReferrer: true, friendCheck: false };
+  }
+
+  async getBio(username) {
+    const data = await API.get("/getBio/" + username)
+      .then(function(response) {
+        if (response.data.status === "OK") return response.data.payload.value;
+      })
+      .catch(function(error) {
+        alert(error);
+      });
+
+    if (data != null) {
+      this.setState({
+        friendCheck: data.friendCheck
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const user = this.props.match.params.username;
+    if (prevProps.match.params.username != user) {
+      this.setState({ username: user });
+      this.getBio(user);
+    }
+  }
+
+  componentDidMount() {
+    const user = this.props.match.params.username;
+    this.setState({ username: user });
+    this.getBio(user);
   }
 
   render() {
     const username = this.props.match.params.username;
-    const { friendCheck } = this.props.location.aboutProps;
+    const { friendCheck } = this.state;
 
     return (
       <Layout className="layout">
@@ -44,7 +75,7 @@ class Profile extends Component {
                     background: "white"
                   }}
                 >
-                  <Bio user={username} />
+                  <Bio user={username} friendCheck={friendCheck} />
                 </Row>
                 {friendCheck ? (
                   <Row

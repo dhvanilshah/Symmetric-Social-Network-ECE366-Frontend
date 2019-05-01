@@ -14,7 +14,8 @@ class Bio extends Component {
       faveSong: "",
       isToggleOn: true,
       username: "",
-      id: ""
+      id: "",
+      friendCheck: false
     };
     this.saveBio = this.saveBio.bind(this);
     this.getBio = this.getBio.bind(this);
@@ -37,7 +38,8 @@ class Bio extends Component {
         bio: data.bio ? data.bio : "No Bio",
         faveSong: data.faveSong ? data.faveSong : "No Favorite Song Added",
         fullName: data.name,
-        id: data.id
+        id: data.id,
+        friendCheck: data.friendCheck
       });
     }
   }
@@ -81,7 +83,7 @@ class Bio extends Component {
 
   render() {
     const { currentUser } = this.props;
-    const { username } = this.state;
+    const { username, friendCheck } = this.state;
     const isToggleOn = this.state.isToggleOn;
     let button;
     let card;
@@ -104,13 +106,14 @@ class Bio extends Component {
         >
           {"Edit"}
         </Button>
-      ) : (
+      ) : friendCheck ? null : (
         <Button
           style={{
             float: "left",
             marginLeft: "8px",
             marginRight: "8px",
-            marginTop: "8px"
+            marginTop: "8px",
+            marginBottom: "8px"
           }}
           onClick={() => this.addFriend(this.state.id)}
         >
@@ -154,7 +157,8 @@ class Bio extends Component {
           style={{
             paddingLeft: "8px",
             paddingRight: "8px",
-            paddingTop: "8px"
+            paddingTop: "8px",
+            marginBottom: "8px"
           }}
         >
           <TextArea
@@ -180,7 +184,11 @@ class Bio extends Component {
       );
     }
     return (
-      <div>
+      <div
+        style={{
+          marginBottom: "8px"
+        }}
+      >
         {card}
         {button}
       </div>
