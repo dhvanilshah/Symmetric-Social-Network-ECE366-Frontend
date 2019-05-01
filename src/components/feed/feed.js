@@ -2,56 +2,20 @@ import { List, Row, Col } from "antd";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import API from "../../api/api";
-
-const data = [
-  {
-    title: "User1 Name"
-  },
-  {
-    title: "User2 Name"
-  },
-  {
-    title: "User3 Name"
-  },
-  {
-    title: "User4 Name"
-  },
-  {
-    title: "User1 Name"
-  },
-  {
-    title: "User2 Name"
-  },
-  {
-    title: "User3 Name"
-  },
-  {
-    title: "User4 Name"
-  },
-  {
-    title: "User1 Name"
-  },
-  {
-    title: "User2 Name"
-  },
-  {
-    title: "User3 Name"
-  },
-  {
-    title: "User4 Name"
-  }
-];
+import _ from "lodash";
 
 class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: []
+      data: [],
+      loading: false
     };
     this.getMyFeed = this.getMyFeed.bind(this);
   }
 
   async getMyFeed() {
+    this.setState({ loading: true });
     const data = await API.get("/getMyFeed")
       .then(function(response) {
         if (response.status === 200) {
@@ -62,7 +26,9 @@ class Feed extends Component {
         alert(error);
       });
     console.log("gmf", data);
-    this.setState({ data });
+    const sortedData = _.sortBy(data, "dateCreated");
+    console.log(sortedData);
+    this.setState({ data, loading: false });
   }
 
   async getPublicFeed() {
@@ -89,9 +55,10 @@ class Feed extends Component {
     }
   }
   render() {
-    const { data } = this.state;
+    const { data, loading } = this.state;
     return (
       <List
+        loading={loading}
         itemLayout="horizontal"
         dataSource={data}
         renderItem={item => (
