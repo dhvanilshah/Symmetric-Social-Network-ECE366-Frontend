@@ -6,6 +6,7 @@ import "./header.css";
 import Complete from "../searchbar/searchbar";
 import FriendRequests from "../friendrequests/friendrequests";
 import ReturnHome from "../uielements/returnHome";
+import { Link } from "react-router-dom";
 
 const { Header } = Layout;
 
@@ -17,6 +18,13 @@ const content = (
 );
 
 class HeaderBar extends Component {
+  handleClick = () => {
+    window.location = "/#";
+  };
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
   render() {
     const { isLoggedIn } = this.props;
     return (
@@ -28,11 +36,25 @@ class HeaderBar extends Component {
           alignItems: "center"
         }}
       >
-        <div className="logo" />
+        <div className="logo">
+          <div className="link">
+            <Link
+              to="/"
+              style={{
+                color: "black",
+                textDecoration: "black",
+                fontSize: "20px"
+              }}
+              activeStyle={{ color: "white" }}
+            >
+              {" "}
+              disc.cool{" "}
+            </Link>
+          </div>
+        </div>
         {isLoggedIn ? <Complete /> : null}
         {isLoggedIn ? (
           <div>
-            <ReturnHome />
             <FriendRequests />
             <ProfileCircle />
           </div>

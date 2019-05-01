@@ -87,33 +87,57 @@ class Bio extends Component {
       button = activeUser ? (
         <Button
           className="edit-button"
-          style={{ float: "right", marginTop: "8px", marginBottom: "8px" }}
+          style={{
+            float: "right",
+            marginTop: "8px",
+            marginBottom: "8px",
+            marginRight: "8px"
+          }}
           onClick={this.editBio}
         >
-          {"edit"}
+          {"Edit"}
         </Button>
       ) : null;
       card = (
-        <Card title={this.state.fullName}>
-          Bio: {this.state.bio}
-          <br />
-          Birthday: {this.state.birthday}
-          <br />
-          Favorite Song: {this.state.faveSong}
-        </Card>
+        <div
+          style={{
+            paddingLeft: "8px",
+            paddingRight: "8px",
+            paddingTop: "16px"
+          }}
+        >
+          <Card title={this.state.fullName}>
+            Bio: {this.state.bio}
+            <br />
+            Birthday: {this.state.birthday}
+            <br />
+            Favorite Song: {this.state.faveSong}
+          </Card>
+        </div>
       );
     } else {
       button = (
         <Button
           className="save-bio-button"
-          style={{ float: "right", marginTop: "8px", marginBottom: "8px" }}
+          style={{
+            float: "right",
+            marginTop: "8px",
+            marginBottom: "8px",
+            marginRight: "8px"
+          }}
           onClick={this.saveBio}
         >
-          {"save"}
+          {"Save"}
         </Button>
       );
       card = (
-        <div>
+        <div
+          style={{
+            paddingLeft: "8px",
+            paddingRight: "8px",
+            paddingTop: "8px"
+          }}
+        >
           <TextArea
             placeholder="Bio"
             autosize={{ minRows: 2, maxRows: 6 }}
