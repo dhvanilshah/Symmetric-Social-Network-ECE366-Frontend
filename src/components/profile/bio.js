@@ -92,32 +92,31 @@ class Bio extends Component {
     }
     if (isToggleOn == true) {
       button = activeUser ? (
-        <div>
-          <Button
-            className="edit-button"
-            style={{
-              float: "right",
-              marginTop: "8px",
-              marginBottom: "8px",
-              marginRight: "8px"
-            }}
-            onClick={this.editBio}
-          >
-            {"Edit"}
-          </Button>
-          <Button
-            style={{
-              float: "left",
-              marginLeft: "8px",
-              marginRight: "8px",
-              marginTop: "8px"
-            }}
-            onClick={() => this.addFriend(this.state.id)}
-          >
-            {"Add Friend"}
-          </Button>
-        </div>
-      ) : null;
+        <Button
+          className="edit-button"
+          style={{
+            float: "right",
+            marginTop: "8px",
+            marginBottom: "8px",
+            marginRight: "8px"
+          }}
+          onClick={this.editBio}
+        >
+          {"Edit"}
+        </Button>
+      ) : (
+        <Button
+          style={{
+            float: "left",
+            marginLeft: "8px",
+            marginRight: "8px",
+            marginTop: "8px"
+          }}
+          onClick={() => this.addFriend(this.state.id)}
+        >
+          {"Add Friend"}
+        </Button>
+      );
       card = (
         <div
           style={{
