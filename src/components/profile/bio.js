@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Card, Input, Button } from "antd";
+import { Card, Input, Button, Row } from "antd";
 import API from "../../api/api";
 const { TextArea } = Input;
 
@@ -13,11 +13,13 @@ class Bio extends Component {
       bio: "",
       faveSong: "",
       isToggleOn: true,
-      username: ""
+      username: "",
+      id: ""
     };
     this.saveBio = this.saveBio.bind(this);
     this.getBio = this.getBio.bind(this);
     this.editBio = this.editBio.bind(this);
+    this.addFriend = this.addFriend.bind(this);
   }
 
   async getBio(username) {
@@ -34,9 +36,14 @@ class Bio extends Component {
         birthday: data.birthday ? data.birthday : "No Birthday Data",
         bio: data.bio ? data.birthday : "No Bio",
         faveSong: data.faveSong ? data.faveSong : "No Favorite Song Added",
-        fullName: data.name
+        fullName: data.name,
+        id: data.id
       });
     }
+  }
+
+  async addFriend(id) {
+    const data = await API.get("addFriend/" + id.toString());
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
@@ -85,18 +92,31 @@ class Bio extends Component {
     }
     if (isToggleOn == true) {
       button = activeUser ? (
-        <Button
-          className="edit-button"
-          style={{
-            float: "right",
-            marginTop: "8px",
-            marginBottom: "8px",
-            marginRight: "8px"
-          }}
-          onClick={this.editBio}
-        >
-          {"Edit"}
-        </Button>
+        <div>
+          <Button
+            className="edit-button"
+            style={{
+              float: "right",
+              marginTop: "8px",
+              marginBottom: "8px",
+              marginRight: "8px"
+            }}
+            onClick={this.editBio}
+          >
+            {"Edit"}
+          </Button>
+          <Button
+            style={{
+              float: "left",
+              marginLeft: "8px",
+              marginRight: "8px",
+              marginTop: "8px"
+            }}
+            onClick={() => this.addFriend(this.state.id)}
+          >
+            {"Add Friend"}
+          </Button>
+        </div>
       ) : null;
       card = (
         <div
