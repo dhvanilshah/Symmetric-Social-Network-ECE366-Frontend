@@ -42,21 +42,28 @@ class Complete extends Component {
       data != null
         ? data.map(opt => (
             <Option key={opt.id} value={opt.id}>
-              <NavLink to={"/profile/" + opt.username}>
-                <Row>
-                  <Col span={6} push={18}>
+              <Row>
+                <Col span={6} push={18}>
+                  {opt.friendCheck ? null : (
                     <Button
                       icon="plus"
                       style={{ width: "100%", marginTop: "16px" }}
                       onClick={() => this.addFriend(opt.id)}
                     />
-                  </Col>
+                  )}
+                </Col>
+                <NavLink
+                  to={{
+                    pathname: "/profile/" + opt.username,
+                    aboutProps: { friendCheck: opt.friendCheck }
+                  }}
+                >
                   <Col span={18} pull={6}>
                     <h4>{opt.name}</h4>
                     <p>{opt.username}</p>
                   </Col>
-                </Row>
-              </NavLink>
+                </NavLink>
+              </Row>
             </Option>
           ))
         : filler.map(opt => (

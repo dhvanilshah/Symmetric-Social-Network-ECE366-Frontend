@@ -56,7 +56,7 @@ class Home extends Component {
                     padding: "16px"
                   }}
                 >
-                  <Feed />
+                  <Feed location={"home"} />
                 </Row>
               </div>
             </Col>

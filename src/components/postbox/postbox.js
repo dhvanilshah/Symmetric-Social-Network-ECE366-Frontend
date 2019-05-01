@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import SongSearch from "../songserach/songsearch";
 import { clearSong } from "../../redux/song/actions";
+import API from "../../api/api";
 
 const { TextArea } = Input;
 
@@ -10,8 +11,28 @@ class Post extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      posted: false
+      posted: false,
+      receiverId: "self",
+      message: ""
     };
+  }
+
+  async addPost() {
+    const data = await API.post("/addPost", {
+      receiverIdString: this.state.receiverId,
+      songIdString: this.props.selectedSong.id,
+      privacy: 0,
+      likes: 0,
+      message: this.state.message
+    })
+      .then(function(response) {
+        return response;
+      })
+      .catch(function(error) {
+        alert(error);
+      });
+    console.log("post", data);
+    this.setState({ data });
   }
 
   render() {
@@ -28,11 +49,17 @@ class Post extends Component {
             paddingTop: "8px"
           }}
         >
-          <TextArea placeholder="Add a Message" rows={5} />
+          <TextArea
+            placeholder="Add a Message"
+            rows={5}
+            onChange={e => {
+              this.setState({ message: e.target.value });
+            }}
+          />
           <Button
             style={{ float: "right", marginTop: "8px", marginBottom: "8px" }}
             onClick={() => {
-              this.setState({ posted: !posted });
+              this.addPost();
             }}
           >
             Post

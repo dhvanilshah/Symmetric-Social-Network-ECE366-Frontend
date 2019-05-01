@@ -52,7 +52,14 @@ class FriendList extends Component {
           >
             <List.Item.Meta
               title={
-                <NavLink to={"/profile/" + item.username}>{item.name}</NavLink>
+                <NavLink
+                  to={{
+                    pathname: "/profile/" + item.username,
+                    aboutProps: { friendCheck: true }
+                  }}
+                >
+                  {item.name}
+                </NavLink>
               }
               description={item.username}
             />

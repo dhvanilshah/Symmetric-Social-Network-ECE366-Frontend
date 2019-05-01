@@ -32,7 +32,7 @@ class Bio extends Component {
     if (data != null) {
       this.setState({
         birthday: data.birthday ? data.birthday : "No Birthday Data",
-        bio: data.bio ? data.birthday : "No Bio",
+        bio: data.bio ? data.bio : "No Bio",
         faveSong: data.faveSong ? data.faveSong : "No Favorite Song Added",
         fullName: data.name
       });

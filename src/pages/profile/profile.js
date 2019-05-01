@@ -17,6 +17,9 @@ class Profile extends Component {
 
   render() {
     const username = this.props.match.params.username;
+    const { friendCheck } = this.props.location.aboutProps;
+
+    console.log("friendcheck", friendCheck);
 
     return (
       <Layout className="layout">
@@ -45,22 +48,26 @@ class Profile extends Component {
                 >
                   <Bio user={username} />
                 </Row>
-                <Row
-                  style={{
-                    marginBottom: "16px",
-                    background: "white"
-                  }}
-                >
-                  <Post />
-                </Row>
-                <Row
-                  style={{
-                    marginBottom: "16px",
-                    background: "white"
-                  }}
-                >
-                  <Feed />
-                </Row>
+                {friendCheck ? (
+                  <Row
+                    style={{
+                      marginBottom: "16px",
+                      background: "white"
+                    }}
+                  >
+                    <Post />
+                  </Row>
+                ) : null}
+                {friendCheck ? (
+                  <Row
+                    style={{
+                      marginBottom: "16px",
+                      background: "white"
+                    }}
+                  >
+                    <Feed location={"profile"} user={username} />
+                  </Row>
+                ) : null}
               </div>
             </Col>
             <Col

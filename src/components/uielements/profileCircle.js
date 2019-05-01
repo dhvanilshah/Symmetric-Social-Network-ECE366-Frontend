@@ -11,7 +11,14 @@ class ProfileCircle extends Component {
     const menu = (
       <Menu>
         <Menu.Item>
-          <NavLink to={profileString}> Profile </NavLink>
+          <NavLink
+            to={{
+              pathname: profileString,
+              aboutProps: { friendCheck: true }
+            }}
+          >
+            Profile
+          </NavLink>
         </Menu.Item>
         <Menu.Item>
           <a
