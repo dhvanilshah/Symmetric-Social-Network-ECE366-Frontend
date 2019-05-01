@@ -2,6 +2,7 @@ import { List, Row, Col } from "antd";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import API from "../../api/api";
+import { NavLink } from "react-router-dom";
 import _ from "lodash";
 
 class Feed extends Component {
@@ -27,7 +28,13 @@ class Feed extends Component {
       });
     console.log("gmf", data);
     const sortedData = _.sortBy(data, "dateCreated");
-    console.log(sortedData);
+
+    data.sort(function(a, b) {
+      a = new Date(a.map.dateCreated);
+      b = new Date(b.map.dateCreated);
+      return a > b ? -1 : a < b ? 1 : 0;
+    });
+    console.log("sorted", data);
     this.setState({ data, loading: false });
   }
 
@@ -67,7 +74,25 @@ class Feed extends Component {
               <Row gutter={16}>
                 <Col span={18} push={6}>
                   <p>
-                    <a>{item.map.writerId}</a> to <a>{item.map.receiverId}</a>
+                    <NavLink
+                      to={{
+                        pathname: "/profile/" + item.map.writerUsername,
+                        aboutProps: { friendCheck: true }
+                      }}
+                    >
+                      <a>{item.map.writerName}</a>
+                    </NavLink>{" "}
+                    to{" "}
+                    <NavLink
+                      to={{
+                        pathname: "/profile/" + item.map.receiverUsername,
+                        aboutProps: { friendCheck: true }
+                      }}
+                    >
+                      <a>{item.map.receiverName}</a>
+                    </NavLink>
+                    <br />
+                    {new Date(item.map.dateCreated).toDateString()}
                   </p>
                   <p>
                     <bold>{item.map.title}</bold> by {item.map.artist}
